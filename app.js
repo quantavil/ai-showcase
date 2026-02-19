@@ -1,5 +1,3 @@
-// app.js
-
 function app() {
   return {
     // State
@@ -15,6 +13,10 @@ function app() {
     showModelCards: false,
     markdownContent: '',
     typewriterInterval: null,
+    
+    // Playground State
+    playgroundCode: '<div class="p-8 text-center">\n  <h1 class="text-2xl font-bold text-gray-800">Hello World</h1>\n  <p class="text-gray-600">Start editing to see the preview.</p>\n</div>',
+    previewFull: false,
 
     // Computed
     get filteredPrompts() {
@@ -73,12 +75,9 @@ function app() {
     // Lifecycle
     init() {
       this.darkMode = localStorage.getItem('darkMode') === 'true';
-
-      // Load data first, then handle hash
       this.loadCatalog().then(() => {
         this.handleHash();
       });
-
       window.addEventListener('hashchange', () => this.handleHash());
     },
 
@@ -98,27 +97,34 @@ function app() {
 
       if (hash === 'leaderboard') {
         this.view = 'leaderboard';
+        this.viewerOpen = false;
+      } else if (hash === 'playground') {
+        this.view = 'playground';
+        this.viewerOpen = false;
       } else if (hash && this.catalog.prompts) {
         const prompt = this.catalog.prompts.find(p => p.id === hash);
         if (prompt) {
           this.loadPromptState(prompt);
+        } else {
+            this.viewerOpen = false;
+            this.view = 'home';
         }
       } else {
-        this.view = 'home';
+        this.viewerOpen = false;
+        this.resetToHome(false);
       }
     },
 
-    resetToHome() {
-      window.location.hash = '';
+    resetToHome(updateHash = true) {
+      if (updateHash) window.location.hash = '';
       this.view = 'home';
       this.currentPrompt = null;
       this.showModelCards = false;
+      this.viewerOpen = false;
     },
 
     openPrompt(prompt) {
       window.location.hash = prompt.id;
-      // State will be updated by handleHash via the hashchange event,
-      // but we call loadPromptState directly to avoid race conditions with clicking.
       this.loadPromptState(prompt);
     },
 
@@ -127,7 +133,6 @@ function app() {
       this.view = 'prompt';
       this.showModelCards = false;
 
-      // Wait for DOM update to ensure typewriter ref exists
       requestAnimationFrame(() => {
         this.startTypewriter(prompt.prompt);
       });
@@ -144,8 +149,8 @@ function app() {
       cursor.className = 'typewriter-cursor';
 
       let index = 0;
-      // Faster speed for better UX
-      const speed = 10;
+      // Fast speed (5ms per char) but visually pleasing
+      const speed = 5; 
 
       this.typewriterInterval = setInterval(() => {
         if (index < text.length) {
@@ -209,11 +214,7 @@ function app() {
       try {
         const response = await fetch(this.getOutputPath(file));
         const text = await response.text();
-        // Simple escaping and wrapping in pre for text files
-        const escaped = text
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;");
+        const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         this.markdownContent = `<pre class="whitespace-pre-wrap font-mono text-sm">${escaped}</pre>`;
       } catch (error) {
         this.markdownContent = '<p class="text-red-500">Failed to load content.</p>';

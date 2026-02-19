@@ -1,5 +1,3 @@
-/* style.css */
-
 /* Selection */
 ::selection {
     background-color: #1c1917;
@@ -52,8 +50,7 @@
 
 .prompt-card,
 .model-card,
-.leaderboard-row,
-.stat-card {
+.leaderboard-row {
     animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
 }
@@ -62,9 +59,9 @@
 .typewriter-cursor {
     display: inline-block;
     width: 2px;
-    height: 1em;
+    height: 1.1em;
     background-color: #22c55e;
-    margin-left: 1px;
+    margin-left: 2px;
     animation: blink 1s step-end infinite;
     vertical-align: text-bottom;
 }
@@ -84,14 +81,16 @@
 /* Focus States */
 button:focus-visible,
 a:focus-visible,
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible {
     outline: 2px solid #1c1917;
     outline-offset: 2px;
 }
 
 .dark button:focus-visible,
 .dark a:focus-visible,
-.dark input:focus-visible {
+.dark input:focus-visible,
+.dark textarea:focus-visible {
     outline-color: #fafaf9;
 }
 
@@ -143,8 +142,7 @@ footer:hover {
 
     .prompt-card,
     .model-card,
-    .leaderboard-row,
-    .stat-card {
+    .leaderboard-row {
         animation: none;
         opacity: 1;
     }
