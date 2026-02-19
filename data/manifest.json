@@ -1,0 +1,66 @@
+{
+  "categories": {
+    "code": "⌨",
+    "reasoning": "◎",
+    "math": "△",
+    "creative": "✦",
+    "analysis": "◈"
+  },
+  "prompts": [
+    {
+      "id": "build-landing-page",
+      "title": "Build a SaaS Landing Page",
+      "category": "code",
+      "prompt": "Create a modern, responsive SaaS landing page with a hero section, features grid, pricing table, and footer. Use only HTML and CSS.",
+      "outputs": [
+        { "model": "GPT-4o", "file": "outputs/build-landing-page/gpt4o.html", "score": 8.5, "note": "Clean layout, solid responsiveness" },
+        { "model": "Claude Sonnet 4", "file": "outputs/build-landing-page/claude-sonnet.html", "score": 9.2, "note": "Excellent design, polished details" },
+        { "model": "Gemini 2.5 Pro", "file": "outputs/build-landing-page/gemini-pro.html", "score": 7.8, "note": "Functional but basic styling" }
+      ]
+    },
+    {
+      "id": "solve-integral",
+      "title": "Solve a Calculus Integral",
+      "category": "math",
+      "prompt": "Solve the integral of (x^3 · e^(x^2)) dx. Show all steps clearly with explanation of the method used.",
+      "outputs": [
+        { "model": "GPT-4o", "file": "outputs/solve-integral/gpt-4o.md", "score": 7.5, "note": "Correct method, minor notation issues" },
+        { "model": "Claude Sonnet 4", "file": "outputs/solve-integral/claude-sonnet-4.md", "score": 9.0 },
+        { "model": "DeepSeek R1", "file": "outputs/solve-integral/deepseek-r1.md", "score": 8.8, "note": "Detailed reasoning chain" }
+      ]
+    },
+    {
+      "id": "write-short-story",
+      "title": "Write a Sci-Fi Short Story",
+      "category": "creative",
+      "prompt": "Write a 500-word science fiction short story about the last human librarian in a world where AI has replaced all knowledge workers.",
+      "outputs": [
+        { "model": "GPT-4o", "file": "outputs/write-short-story/gpt-4o.md", "score": 8.0 },
+        { "model": "Claude Sonnet 4", "file": "outputs/write-short-story/claude-sonnet-4.md", "score": 9.5, "note": "Beautiful prose, emotionally resonant" },
+        { "model": "Gemini 2.5 Pro", "file": "outputs/write-short-story/gemini-2.5-pro.md", "score": 7.6 }
+      ]
+    },
+    {
+      "id": "explain-quantum",
+      "title": "Explain Quantum Entanglement",
+      "category": "reasoning",
+      "prompt": "Explain quantum entanglement to a smart 15-year-old. Use analogies, avoid jargon, make it genuinely interesting.",
+      "outputs": [
+        { "model": "GPT-4o", "file": "outputs/explain-quantum/gpt-4o.md", "score": 8.2 },
+        { "model": "Gemini 2.5 Pro", "file": "outputs/explain-quantum/gemini-2.5-pro.md", "score": 8.7, "note": "Great analogies" },
+        { "model": "Claude Sonnet 4", "file": "outputs/explain-quantum/claude-sonnet-4.md", "score": 9.1 }
+      ]
+    },
+    {
+      "id": "data-analysis",
+      "title": "Analyze a Sales Dataset",
+      "category": "analysis",
+      "prompt": "Given monthly sales CSV data, identify trends, anomalies, and provide actionable insights with Python visualization code.",
+      "outputs": [
+        { "model": "GPT-4o", "file": "outputs/data-analysis/gpt-4o.md", "score": 8.8, "note": "Thorough analysis, clean code" },
+        { "model": "Claude Sonnet 4", "file": "outputs/data-analysis/claude-sonnet-4.md", "score": 8.5 },
+        { "model": "DeepSeek R1", "file": "outputs/data-analysis/deepseek-r1.md", "score": 8.1 }
+      ]
+    }
+  ]
+}

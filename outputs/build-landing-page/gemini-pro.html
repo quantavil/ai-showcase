@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudSync</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#333;line-height:1.7;background:#fff}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;border-bottom:1px solid #eee}
+header h1{font-size:1.3rem;color:#1a73e8}
+header nav a{margin-left:24px;text-decoration:none;color:#555;font-size:.9rem}
+header nav a:hover{color:#1a73e8}
+.hero{padding:80px 20px;text-align:center;background:#f8fafc}
+.hero h2{font-size:2.5rem;font-weight:700;color:#111;margin-bottom:16px}
+.hero p{font-size:1.1rem;color:#666;max-width:550px;margin:0 auto 32px}
+.btn{padding:12px 28px;background:#1a73e8;color:#fff;border:none;border-radius:6px;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#1557b0}
+.btn-outline{background:transparent;color:#1a73e8;border:2px solid #1a73e8;margin-left:12px}
+.features{padding:64px 20px;max-width:900px;margin:0 auto}
+.features h2{text-align:center;font-size:1.8rem;margin-bottom:40px;color:#111}
+.row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.col{flex:1;min-width:240px;max-width:300px;padding:28px;border:1px solid #e5e7eb;border-radius:8px}
+.col h3{font-size:1.05rem;margin-bottom:8px;color:#111}
+.col p{font-size:.9rem;color:#666}
+.col .icon{font-size:2rem;margin-bottom:12px}
+.pricing{padding:64px 20px;background:#f8fafc;text-align:center}
+.pricing h2{font-size:1.8rem;margin-bottom:40px;color:#111}
+.price-box{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:32px 24px;text-align:center}
+.price-box h3{color:#666;font-size:.9rem;margin-bottom:8px}
+.price-box .amount{font-size:2.2rem;font-weight:700;color:#111;margin-bottom:16px}
+.price-box .amount span{font-size:.85rem;color:#999;font-weight:400}
+.price-box ul{list-style:none;margin-bottom:24px;font-size:.9rem;color:#555}
+.price-box li{padding:4px 0}
+.price-box.highlight{border-color:#1a73e8;box-shadow:0 4px 20px rgba(26,115,232,.1)}
+footer{text-align:center;padding:32px;color:#999;font-size:.85rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>☁ CloudSync</h1>
+  <nav><a href="#">Features</a><a href="#">Pricing</a><a href="#">Contact</a></nav>
+</header>
+<section class="hero">
+  <h2>Keep Everything In Sync</h2>
+  <p>CloudSync provides fast, secure file synchronization for teams of all sizes. Start syncing in minutes.</p>
+  <a href="#" class="btn">Get Started</a>
+  <a href="#" class="btn btn-outline">Learn More</a>
+</section>
+<section class="features">
+  <h2>Features</h2>
+  <div class="row">
+    <div class="col"><div class="icon">🚀</div><h3>Fast Sync</h3><p>Industry-leading sync speeds ensure your team always has the latest files.</p></div>
+    <div class="col"><div class="icon">🔐</div><h3>Secure</h3><p>Enterprise-grade encryption protects your data at rest and in transit.</p></div>
+    <div class="col"><div class="icon">🔌</div><h3>Integrations</h3><p>Works with your favorite tools including Slack, Jira, and Google Workspace.</p></div>
+  </div>
+</section>
+<section class="pricing">
+  <h2>Pricing</h2>
+  <div class="row">
+    <div class="price-box"><h3>Free</h3><div class="amount">$0<span>/mo</span></div><ul><li>5 GB storage</li><li>2 users</li><li>Email support</li></ul><a href="#" class="btn">Sign Up</a></div>
+    <div class="price-box highlight"><h3>Team</h3><div class="amount">$19<span>/mo</span></div><ul><li>200 GB storage</li><li>20 users</li><li>Priority support</li></ul><a href="#" class="btn">Sign Up</a></div>
+    <div class="price-box"><h3>Business</h3><div class="amount">$49<span>/mo</span></div><ul><li>2 TB storage</li><li>Unlimited users</li><li>24/7 support</li></ul><a href="#" class="btn">Contact Us</a></div>
+  </div>
+</section>
+<footer>© 2025 CloudSync. All rights reserved.</footer>
+</body>
+</html>

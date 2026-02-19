@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Showcase</title>
+    <meta name="description" content="Compare LLM outputs. Real prompts. Real results. Honest scores.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◯</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="min-h-screen bg-stone-50 text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 font-sans transition-colors duration-300">
+
+<div x-data="showcase" x-cloak class="min-h-screen flex flex-col">
+
+    <!-- ════════════ HEADER ════════════ -->
+    <header class="border-b border-neutral-200 dark:border-neutral-800 sticky top-0 z-40 bg-stone-50/80 dark:bg-neutral-950/80 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+            <button @click="goHome()" class="flex items-center gap-2 hover:opacity-70 transition-opacity">
+                <span class="text-lg font-bold tracking-tight">◯ AI Showcase</span>
+            </button>
+            <div class="flex items-center gap-2">
+                <button @click="toggleView('leaderboard')"
+                    class="text-xs font-mono uppercase tracking-wider px-3 py-1.5 border transition-all"
+                    :class="view === 'leaderboard'
+                        ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-white dark:text-black dark:border-white'
+                        : 'border-neutral-300 dark:border-neutral-700 hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black'">
+                    Ranks
+                </button>
+                <button @click="toggleDark()"
+                    class="w-9 h-9 flex items-center justify-center border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all">
+                    <span x-text="dark ? '☀' : '◐'" class="text-sm"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════════ HOME ════════════ -->
+    <main x-show="view === 'home'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 translate-y-4"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          class="flex-1">
+
+        <!-- Hero -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 pt-14 pb-10 sm:pt-24 sm:pb-16">
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1]">
+                See how LLMs<br>
+                <span class="text-neutral-400 dark:text-neutral-600">actually perform.</span>
+            </h1>
+            <p class="mt-4 text-neutral-500 dark:text-neutral-400 text-sm sm:text-base font-mono max-w-xl">
+                Real prompts → Real outputs → Honest scores
+            </p>
+            <div class="mt-8 flex gap-8 text-sm font-mono">
+                <div>
+                    <span class="text-2xl font-black" x-text="manifest?.prompts?.length || 0"></span>
+                    <span class="text-neutral-500 ml-1">prompts</span>
+                </div>
+                <div>
+                    <span class="text-2xl font-black" x-text="totalModels"></span>
+                    <span class="text-neutral-500 ml-1">models</span>
+                </div>
+                <div>
+                    <span class="text-2xl font-black" x-text="totalOutputs"></span>
+                    <span class="text-neutral-500 ml-1">outputs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-6">
+            <div class="flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+                <div class="flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                    <button @click="activeCategory = 'all'"
+                        class="cat-pill"
+                        :class="activeCategory === 'all' ? 'cat-active' : 'cat-idle'">
+                        All
+                    </button>
+                    <template x-for="cat in categoryList" :key="cat.id">
+                        <button @click="activeCategory = cat.id"
+                            class="cat-pill"
+                            :class="activeCategory === cat.id ? 'cat-active' : 'cat-idle'">
+                            <span x-text="cat.icon + ' ' + cat.id"></span>
+                        </button>
+                    </template>
+                </div>
+                <input x-model="search" type="text" placeholder="Search..."
+                    class="w-full sm:w-56 text-sm font-mono bg-transparent border border-neutral-300 dark:border-neutral-700 px-3 py-1.5 focus:outline-none focus:border-neutral-900 dark:focus:border-neutral-400 transition-colors placeholder:text-neutral-400">
+            </div>
+        </section>
+
+        <!-- Prompt Cards -->
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+            <div class="grid gap-3">
+                <template x-for="prompt in filteredPrompts" :key="prompt.id">
+                    <button @click="selectPrompt(prompt)"
+                        class="group w-full text-left border border-neutral-200 dark:border-neutral-800 p-4 sm:p-5 hover:border-neutral-900 dark:hover:border-neutral-400 transition-all hover:bg-white dark:hover:bg-neutral-900">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1 min-w-0">
+                                <span class="text-xs font-mono uppercase tracking-wider text-neutral-400"
+                                      x-text="getCatIcon(prompt.category) + ' ' + prompt.category"></span>
+                                <h3 class="font-bold text-base sm:text-lg mt-0.5 truncate" x-text="prompt.title"></h3>
+                                <p class="text-sm text-neutral-500 mt-1 line-clamp-1 font-mono" x-text="prompt.prompt"></p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <div class="text-2xl font-black" :class="scoreColor(avgScore(prompt))" x-text="avgScore(prompt)"></div>
+                                <div class="text-xs text-neutral-400 font-mono" x-text="prompt.outputs.length + ' models'"></div>
+                            </div>
+                        </div>
+                        <div class="mt-3 h-1 bg-neutral-100 dark:bg-neutral-800 w-full overflow-hidden">
+                            <div class="h-full bg-neutral-900 dark:bg-neutral-100 transition-all duration-500"
+                                 :style="'width:' + (avgScore(prompt) * 10) + '%'"></div>
+                        </div>
+                    </button>
+                </template>
+                <div x-show="filteredPrompts.length === 0" class="text-center py-20 text-neutral-400 font-mono text-sm">
+                    No prompts found.
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ════════════ LEADERBOARD ════════════ -->
+    <main x-show="view === 'leaderboard'"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 translate-y-4"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          class="flex-1">
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-20">
+            <h2 class="text-2xl sm:text-4xl font-black tracking-tight mb-1">Model Rankings</h2>
+            <p class="text-neutral-500 font-mono text-sm mb-10">Average scores across all prompts</p>
+            <div class="grid gap-3">
+                <template x-for="(entry, i) in leaderboard" :key="entry.model">
+                    <div class="border border-neutral-200 dark:border-neutral-800 p-4 sm:p-5 flex items-center gap-4 sm:gap-6">
+                        <span class="text-3xl sm:text-4xl font-black text-neutral-200 dark:text-neutral-800 w-12 text-center shrink-0"
+                              x-text="'#' + (i + 1)"></span>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-base sm:text-lg truncate" x-text="entry.model"></h3>
+                            <p class="text-xs text-neutral-500 font-mono" x-text="entry.count + ' outputs tested'"></p>
+                            <div class="mt-2 h-1.5 bg-neutral-100 dark:bg-neutral-800 w-full max-w-xs overflow-hidden">
+                                <div class="h-full bg-neutral-900 dark:bg-neutral-100 transition-all duration-700"
+                                     :style="'width:' + (entry.avg * 10) + '%'"></div>
+                            </div>
+                        </div>
+                        <div class="text-3xl sm:text-4xl font-black shrink-0" :class="scoreColor(entry.avg)" x-text="entry.avg"></div>
+                    </div>
+                </template>
+            </div>
+        </section>
+    </main>
+
+    <!-- ════════════ PROMPT DETAIL ════════════ -->
+    <main x-show="view === 'prompt'"
+          x-transition:enter="transition ease-out duration-200"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          class="flex-1">
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+
+            <button @click="goHome()"
+                class="text-sm font-mono text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors mb-8 flex items-center gap-1">
+                ← back
+            </button>
+
+            <!-- Execution Animation -->
+            <div x-show="animating" x-transition class="mb-8">
+                <div class="bg-neutral-900 dark:bg-neutral-100 text-green-400 dark:text-green-700 p-5 sm:p-6 font-mono text-xs sm:text-sm overflow-hidden">
+                    <div class="mb-2 text-neutral-500 text-[10px] uppercase tracking-widest">Executing Prompt</div>
+                    <div class="min-h-[3rem]">
+                        <span x-text="typedText"></span><span class="cursor-blink">█</span>
+                    </div>
+                    <div class="mt-4 h-0.5 bg-neutral-700 dark:bg-neutral-300 overflow-hidden">
+                        <div class="h-full bg-green-400 dark:bg-green-600 animate-progress"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div x-show="!animating && selectedPrompt" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0">
+                <span class="text-xs font-mono uppercase tracking-wider text-neutral-400"
+                      x-text="getCatIcon(selectedPrompt?.category) + ' ' + selectedPrompt?.category"></span>
+                <h2 class="text-xl sm:text-3xl font-black tracking-tight mt-1 mb-4" x-text="selectedPrompt?.title"></h2>
+
+                <div class="bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 p-4 font-mono text-xs sm:text-sm mb-10 text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                    <span class="text-neutral-300 dark:text-neutral-600 select-none">› </span>
+                    <span x-text="selectedPrompt?.prompt"></span>
+                </div>
+
+                <h3 class="text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-4">Results by Model</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <template x-for="output in selectedPrompt?.outputs || []" :key="output.model">
+                        <button @click="viewOutput(output)"
+                            class="group text-left border border-neutral-200 dark:border-neutral-800 p-5 hover:border-neutral-900 dark:hover:border-neutral-400 transition-all hover:bg-white dark:hover:bg-neutral-900">
+                            <div class="flex items-start justify-between mb-3">
+                                <h4 class="font-bold text-sm sm:text-base" x-text="output.model"></h4>
+                                <span class="text-2xl font-black leading-none" :class="scoreColor(output.score)" x-text="output.score"></span>
+                            </div>
+                            <div class="h-1 bg-neutral-100 dark:bg-neutral-800 w-full mb-3 overflow-hidden">
+                                <div class="h-full bg-neutral-900 dark:bg-neutral-100 transition-all duration-500"
+                                     :style="'width:' + (output.score * 10) + '%'"></div>
+                            </div>
+                            <p x-show="output.note" class="text-xs text-neutral-500 font-mono mb-3 leading-relaxed" x-text="output.note"></p>
+                            <span class="text-[10px] font-mono uppercase tracking-widest text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors">
+                                View Output →
+                            </span>
+                        </button>
+                    </template>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ════════════ FULLSCREEN VIEWER ════════════ -->
+    <div x-show="showViewer"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         @keydown.escape.window="closeViewer()"
+         class="fixed inset-0 z-50 bg-white dark:bg-neutral-950 flex flex-col">
+
+        <!-- Viewer bar -->
+        <div class="shrink-0 h-12 flex items-center justify-between px-3 sm:px-5 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
+            <div class="flex items-center gap-2 min-w-0">
+                <span class="font-bold text-sm truncate" x-text="selectedOutput?.model"></span>
+                <span class="hidden sm:inline text-xs font-mono text-neutral-400 truncate" x-text="'— ' + selectedPrompt?.title"></span>
+            </div>
+            <div class="flex items-center gap-3 shrink-0">
+                <span class="text-sm font-black" :class="scoreColor(selectedOutput?.score)"
+                      x-text="selectedOutput?.score + '/10'"></span>
+                <button @click="closeViewer()"
+                    class="w-10 h-10 sm:w-8 sm:h-8 flex items-center justify-center border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-900 hover:text-white dark:hover:bg-white dark:hover:text-black transition-all text-base font-bold">
+                    ✕
+                </button>
+            </div>
+        </div>
+
+        <!-- iframe for .html -->
+        <iframe x-show="selectedOutput?.file?.endsWith('.html')"
+                :src="showViewer && selectedOutput?.file?.endsWith('.html') ? selectedOutput.file : ''"
+                class="flex-1 w-full border-0"
+                sandbox="allow-scripts allow-same-origin"></iframe>
+
+        <!-- Markdown / text -->
+        <div x-show="selectedOutput && !selectedOutput?.file?.endsWith('.html')"
+             class="flex-1 overflow-auto">
+            <article class="max-w-3xl mx-auto px-4 sm:px-8 py-8 sm:py-12 prose-custom font-mono text-sm leading-relaxed"
+                     x-html="outputContent"></article>
+        </div>
+    </div>
+
+    <!-- ════════════ FOOTER ════════════ -->
+    <footer x-show="!showViewer" class="border-t border-neutral-200 dark:border-neutral-800 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-neutral-400 font-mono">
+            <span>AI Showcase — compare LLMs honestly</span>
+            <span class="text-neutral-300 dark:text-neutral-700">ESC to close viewer</span>
+        </div>
+    </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
