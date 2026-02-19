@@ -1,0 +1,21 @@
+Solving the Two Guards Riddle
+=============================
+
+Prompt: A traveler comes to a fork in the road... solve this step-by-step.
+
+The Strategy
+------------
+To solve this riddle, you must ask a question that forces both the liar and the truth-teller to provide the same result—one that you can then invert.
+
+The Question:
+"Which door would the other guard say leads to the exit?"
+
+Step-by-Step Breakdown:
+1. Truth-Teller: If you ask the truth-teller, they will tell you the truth about what the liar would say. Since the liar would point to the dangerous door, the truth-teller will also point to the dangerous door.
+2. Liar: If you ask the liar, they will lie about what the truth-teller would say. Since the truth-teller would point to the safe door, the liar will lie and point to the dangerous door.
+
+Result:
+No matter which guard you speak to, they will both point to the door that leads to death. 
+
+Optimal Action:
+Choose the door that the guard does NOT point to.

@@ -1,0 +1,77 @@
+{
+    "categories": {
+        "code": "💻",
+        "creative": "✨"
+    },
+    "prompts": [
+        {
+            "id": "binary-search-impl",
+            "title": "Implement Binary Search Algorithm",
+            "category": "code",
+            "prompt": "Write a binary search implementation in Python that handles edge cases like empty arrays, duplicate elements, and returns the first occurrence. Include comprehensive unit tests and time complexity analysis.",
+            "outputs": [
+                {
+                    "model": "GPT-4o",
+                    "file": "binary-search-gpt4o.html",
+                    "score": 9.2
+                },
+                {
+                    "model": "Claude 3.5 Sonnet",
+                    "file": "binary-search-claude.html",
+                    "score": 9.5
+                },
+                {
+                    "model": "Gemini 1.5 Pro",
+                    "file": "binary-search-gemini.html",
+                    "score": 9.3
+                }
+            ]
+        },
+        {
+            "id": "build-landing-page",
+            "title": "SaaS Landing Page Design",
+            "category": "creative",
+            "prompt": "Create a modern, high-converting landing page for a SaaS product called 'CloudSync'. Include a hero section with deep-purple gradients, a feature grid with glassmorphism effects, and a responsive pricing table. Focus on a premium dark mode aesthetic.",
+            "outputs": [
+                {
+                    "model": "GPT-4o",
+                    "file": "gpt4o.html",
+                    "score": 9.5
+                },
+                {
+                    "model": "Claude 3.5 Sonnet",
+                    "file": "claude-sonnet.html",
+                    "score": 9.8
+                },
+                {
+                    "model": "Gemini 1.5 Pro",
+                    "file": "gemini-pro.html",
+                    "score": 9.2
+                }
+            ]
+        },
+        {
+            "id": "logic-puzzle",
+            "title": "The Two Guards Riddle",
+            "category": "creative",
+            "prompt": "A traveler comes to a fork in the road... [standard 2-guard riddle text]. Solve this step-by-step and provide the optimal question to ask.",
+            "outputs": [
+                {
+                    "model": "GPT-4o",
+                    "file": "gpt-4o.txt",
+                    "score": 8.5
+                },
+                {
+                    "model": "Claude 3.5 Sonnet",
+                    "file": "claude-sonnet-4.txt",
+                    "score": 9.0
+                },
+                {
+                    "model": "Gemini 1.5 Pro",
+                    "file": "gemini-2.5-pro.txt",
+                    "score": 8.7
+                }
+            ]
+        }
+    ]
+}

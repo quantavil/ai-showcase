@@ -1,0 +1,103 @@
+<!-- outputs/binary-search-impl/binary-search-gemini.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Search | Gemini 1.5 Pro</title>
+    <style>
+        body {
+            font-family: 'Google Sans', sans-serif;
+            background: #f0f4f8;
+            color: #3c4043;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .chip {
+            background: #e8f0fe;
+            color: #1967d2;
+            padding: 6px 16px;
+            border-radius: 100px;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        pre {
+            background: #f8f9fa;
+            border: 1px solid #dadce0;
+            padding: 20px;
+            border-radius: 12px;
+            color: #202124;
+        }
+
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .metrics {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .metric-item b {
+            display: block;
+            font-size: 24px;
+            color: #1a73e8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="chip">Gemini 1.5 Pro Output</div>
+        <h1>Robust Binary Search</h1>
+        <p>A reliable implementation handling duplicates and edge cases.</p>
+
+        <pre><code>def find_first_occurrence(data, val):
+    if not data:
+        return -1
+    
+    l, r = 0, len(data) - 1
+    idx = -1
+    
+    while l <= r:
+        m = l + (r - l) // 2
+        if data[m] == val:
+            idx = m
+            r = m - 1
+        elif data[m] < val:
+            l = m + 1
+        else:
+            r = m - 1
+            
+    return idx</code></pre>
+
+        <div class="metrics">
+            <div class="metric-item">
+                <span>Time Cost</span>
+                <b>O(log N)</b>
+            </div>
+            <div class="metric-item">
+                <span>Space Cost</span>
+                <b>O(1)</b>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

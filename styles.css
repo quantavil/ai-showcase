@@ -1,180 +1,161 @@
-/* ═══ Cloak ═══ */
-[x-cloak] { display: none !important; }
+/* style.css */
 
-/* ═══ Scrollbar hide ═══ */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* ═══ Category pills (shared) ═══ */
-.cat-pill {
-    @apply shrink-0 text-xs font-mono uppercase tracking-wider px-3 py-1.5 border transition-all whitespace-nowrap;
-}
-.cat-active {
-    @apply bg-neutral-900 text-white border-neutral-900;
-}
-.dark .cat-active {
-    @apply bg-white text-black border-white;
-}
-.cat-idle {
-    @apply border-neutral-300;
-}
-.dark .cat-idle {
-    @apply border-neutral-700;
-}
-.cat-idle:hover {
-    @apply border-neutral-900;
-}
-.dark .cat-idle:hover {
-    @apply border-neutral-400;
+/* Selection */
+::selection {
+    background-color: #1c1917;
+    color: #fafaf9;
 }
 
-/* ═══ Cursor blink ═══ */
-.cursor-blink {
-    animation: blink 0.7s step-end infinite;
-}
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+.dark ::selection {
+    background-color: #fafaf9;
+    color: #1c1917;
 }
 
-/* ═══ Progress bar fill ═══ */
-@keyframes progress {
-    from { width: 0; }
-    to   { width: 100%; }
-}
-.animate-progress {
-    animation: progress 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 
-/* ═══ Line clamp ═══ */
-.line-clamp-1 {
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #a8a29e;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #525252;
+}
+
+/* Line Clamp */
+.line-clamp-2 {
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* ═══ Prose (markdown output) ═══ */
-.prose-custom {
-    color: #404040;
-    line-height: 1.85;
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-.dark .prose-custom {
-    color: #a3a3a3;
+
+.prompt-card,
+.model-card,
+.leaderboard-row,
+.stat-card {
+    animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
 }
-.prose-custom h1,
-.prose-custom h2,
-.prose-custom h3,
-.prose-custom h4 {
+
+/* Typewriter Cursor */
+.typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: #22c55e;
+    margin-left: 1px;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Focus States */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+    outline: 2px solid #1c1917;
+    outline-offset: 2px;
+}
+
+.dark button:focus-visible,
+.dark a:focus-visible,
+.dark input:focus-visible {
+    outline-color: #fafaf9;
+}
+
+/* Prose Overrides for Markdown */
+.prose {
+    --tw-prose-body: #57534e;
+    --tw-prose-headings: #1c1917;
+    --tw-prose-links: #1c1917;
+    --tw-prose-code: #1c1917;
+    --tw-prose-pre-bg: #f5f5f4;
     font-family: 'Inter', system-ui, sans-serif;
-    font-weight: 800;
-    color: #0a0a0a;
-    margin: 2em 0 0.6em;
-    letter-spacing: -0.02em;
-}
-.dark .prose-custom h1,
-.dark .prose-custom h2,
-.dark .prose-custom h3,
-.dark .prose-custom h4 {
-    color: #fafaf9;
-}
-.prose-custom h1 { font-size: 1.6em; }
-.prose-custom h2 { font-size: 1.3em; }
-.prose-custom h3 { font-size: 1.1em; }
-.prose-custom p { margin: 0.8em 0; }
-.prose-custom ul,
-.prose-custom ol {
-    padding-left: 1.5em;
-    margin: 0.8em 0;
-}
-.prose-custom li { margin: 0.3em 0; }
-.prose-custom pre {
-    background: #171717;
-    color: #e5e5e5;
-    padding: 1em;
-    overflow-x: auto;
-    margin: 1.2em 0;
-    border: 1px solid #333;
-    font-size: 0.85em;
-}
-.prose-custom code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.88em;
-}
-.prose-custom p code,
-.prose-custom li code {
-    background: #f5f5f4;
-    padding: 0.15em 0.4em;
-    border: 1px solid #e5e5e5;
-}
-.dark .prose-custom p code,
-.dark .prose-custom li code {
-    background: #262626;
-    border-color: #404040;
-}
-.prose-custom blockquote {
-    border-left: 3px solid #d4d4d4;
-    padding-left: 1em;
-    margin: 1em 0;
-    color: #737373;
-    font-style: italic;
-}
-.dark .prose-custom blockquote {
-    border-color: #525252;
-}
-.prose-custom a {
-    color: #6366f1;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-}
-.prose-custom img {
-    max-width: 100%;
-    margin: 1em 0;
-}
-.prose-custom hr {
-    border: none;
-    border-top: 1px solid #e5e5e5;
-    margin: 2em 0;
-}
-.dark .prose-custom hr {
-    border-color: #333;
-}
-.prose-custom table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1em 0;
-    font-size: 0.9em;
-}
-.prose-custom th,
-.prose-custom td {
-    border: 1px solid #e5e5e5;
-    padding: 0.5em 0.75em;
-    text-align: left;
-}
-.dark .prose-custom th,
-.dark .prose-custom td {
-    border-color: #404040;
-}
-.prose-custom th {
-    background: #f5f5f4;
-    font-weight: 700;
-}
-.dark .prose-custom th {
-    background: #262626;
 }
 
-/* ═══ Selection ═══ */
-::selection {
-    background: #0a0a0a;
-    color: #fafaf9;
+.dark .prose {
+    --tw-prose-body: #a3a3a3;
+    --tw-prose-headings: #fafaf9;
+    --tw-prose-links: #fafaf9;
+    --tw-prose-code: #fafaf9;
+    --tw-prose-pre-bg: #262626;
 }
-.dark ::selection {
+
+.prose pre {
+    border: 1px solid #e7e5e4;
     background: #fafaf9;
-    color: #0a0a0a;
 }
 
-/* ═══ Body scrollbar (thin) ═══ */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d4d4d4; }
-.dark ::-webkit-scrollbar-thumb { background: #404040; }
+.dark .prose pre {
+    border-color: #404040;
+    background: #171717;
+}
+
+.prose code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8em;
+}
+
+/* Footer */
+footer {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+footer:hover {
+    opacity: 1;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    .prompt-card,
+    .model-card,
+    .leaderboard-row,
+    .stat-card {
+        animation: none;
+        opacity: 1;
+    }
+
+    .typewriter-cursor {
+        animation: none;
+        opacity: 1;
+    }
+
+    * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

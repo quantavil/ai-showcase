@@ -1,0 +1,22 @@
+# The Two Guards Riddle - Solution
+
+## The Question
+You should ask either guard: **"If I were to ask the OTHER guard which door leads to freedom, what would they say?"**
+
+## Step-by-Step Logic
+1. There are two guards: one always tells the truth, and one always lies.
+2. There are two doors: one leads to freedom, and one leads to certain death.
+3. You don't know which guard is which, nor which door is which.
+
+### Scenario A: You ask the Truth-telling guard
+- You ask: "What would the other guard (the Liar) say is the door to freedom?"
+- The Truth-teller knows the Liar will point to the **door to death**.
+- Since the Truth-teller tells the truth about what the Liar would say, they will point to the **door to death**.
+
+### Scenario B: You ask the Lying guard
+- You ask: "What would the other guard (the Truth-teller) say is the door to freedom?"
+- The Liar knows the Truth-teller would correctly point to the **door to freedom**.
+- Since the Liar must lie about what the Truth-teller would say, they will point to the **door to death**.
+
+## Conclusion
+In both scenarios, the guard you ask will point to the **door to death**. Therefore, you must take the **OTHER** door to find freedom.

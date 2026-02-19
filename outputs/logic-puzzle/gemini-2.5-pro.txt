@@ -1,0 +1,11 @@
+# Riddle Solution: The Two Guards
+
+Question to ask: "If I asked the other guard which path is the correct one, which one would they point to?"
+
+Logic Flow:
+- If you ask the Truth-teller: They will accurately report the Liar's lie. The Liar would point to the wrong path, so the Truth-teller points to the wrong path.
+- If you ask the Liar: They will lie about the Truth-teller's honest answer. The Truth-teller would point to the correct path, so the Liar lies and points to the wrong path.
+
+Outcome: Both guards will always point to the incorrect path.
+
+Final Answer: Ask the question and then take the opposite path.

@@ -1,0 +1,103 @@
+<!-- outputs/binary-search-impl/gpt4o.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Search - GPT-4o</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { 
+      font-family: 'JetBrains Mono', monospace; 
+      background: #fafaf9; 
+      color: #1c1917;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .header { border-bottom: 2px solid #1c1917; padding-bottom: 1rem; margin-bottom: 2rem; }
+    .model-badge { display: inline-block; padding: 0.25rem 0.75rem; background: #1c1917; color: #fafaf9; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    pre { background: #1c1917; color: #fafaf9; padding: 1.5rem; overflow-x: auto; margin: 1rem 0; }
+    code { font-family: inherit; font-size: 0.875rem; }
+    .comment { color: #78716c; }
+    .keyword { color: #f59e0b; }
+    .function { color: #22c55e; }
+    .string { color: #3b82f6; }
+    h2 { margin-top: 2rem; font-size: 1.25rem; text-transform: uppercase; letter-spacing: 0.05em; border-left: 4px solid #1c1917; padding-left: 1rem; }
+    .complexity { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0; }
+    .complexity-card { border: 1px solid #e7e5e4; padding: 1rem; }
+    .complexity-label { font-size: 0.75rem; color: #78716c; text-transform: uppercase; letter-spacing: 0.1em; }
+    .complexity-value { font-size: 1.5rem; font-weight: bold; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <span class="model-badge">GPT-4o Output</span>
+      <h1 style="margin-top: 1rem; font-size: 2rem;">Binary Search Implementation</h1>
+    </header>
+    
+    <pre><code><span class="keyword">def</span> <span class="function">binary_search</span>(arr, target):
+    <span class="comment">"""
+    Binary search that returns the first occurrence of target.
+    Handles empty arrays and duplicates.
+    
+    Time: O(log n)
+    Space: O(1)
+    """</span>
+    <span class="keyword">if not</span> arr:
+        <span class="keyword">return</span> -1
+    
+    left, right = 0, len(arr) - 1
+    result = -1
+    
+    <span class="keyword">while</span> left <= right:
+        mid = (left + right) // 2
+        
+        <span class="keyword">if</span> arr[mid] == target:
+            result = mid
+            right = mid - 1  <span class="comment"># Continue searching left</span>
+        <span class="keyword">elif</span> arr[mid] < target:
+            left = mid + 1
+        <span class="keyword">else</span>:
+            right = mid - 1
+    
+    <span class="keyword">return</span> result</code></pre>
+    
+    <h2>Complexity Analysis</h2>
+    <div class="complexity">
+      <div class="complexity-card">
+        <div class="complexity-label">Time Complexity</div>
+        <div class="complexity-value">O(log n)</div>
+      </div>
+      <div class="complexity-card">
+        <div class="complexity-label">Space Complexity</div>
+        <div class="complexity-value">O(1)</div>
+      </div>
+    </div>
+    
+    <h2>Unit Tests</h2>
+    <pre><code><span class="keyword">import</span> unittest
+
+<span class="keyword">class</span> <span class="function">TestBinarySearch</span>(unittest.TestCase):
+    <span class="keyword">def</span> <span class="function">test_empty_array</span>(self):
+        self.assertEqual(binary_search([], 5), -1)
+    
+    <span class="keyword">def</span> <span class="function">test_single_element_found</span>(self):
+        self.assertEqual(binary_search([5], 5), 0)
+    
+    <span class="keyword">def</span> <span class="function">test_single_element_not_found</span>(self):
+        self.assertEqual(binary_search([3], 5), -1)
+    
+    <span class="keyword">def</span> <span class="function">test_duplicates_first_occurrence</span>(self):
+        arr = [1, 2, 2, 2, 3, 4]
+        self.assertEqual(binary_search(arr, 2), 1)
+    
+    <span class="keyword">def</span> <span class="function">test_not_present</span>(self):
+        self.assertEqual(binary_search([1, 2, 3, 4, 5], 6), -1)
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    unittest.main()</code></pre>
+  </div>
+</body>
+</html>

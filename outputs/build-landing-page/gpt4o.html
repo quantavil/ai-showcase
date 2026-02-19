@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudSync | The Future of Seamless Collaboration</title>
+    <style>
+        :root {
+            --bg: #030014;
+            --card-bg: rgba(17, 12, 46, 0.4);
+            --border: rgba(255, 255, 255, 0.1);
+            --accent: #7c3aed;
+            --accent-glow: rgba(124, 58, 237, 0.5);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #1e1b4b 0%, var(--bg) 70%);
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            padding: 16px 36px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 600;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* Features Grid */
+        .features {
+            max-width: 1200px;
+            margin: 100px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .feature-card p {
+            color: var(--text-dim);
+        }
+
+        /* Pricing Table */
+        .pricing {
+            max-width: 1000px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .pricing h2 {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .price-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 50px 30px;
+            border-radius: 24px;
+            position: relative;
+        }
+
+        .price-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            background: linear-gradient(180deg, rgba(124, 58, 237, 0.1) 0%, var(--card-bg) 100%);
+        }
+
+        .price-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .price-card .amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .price-card ul {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 40px;
+            color: var(--text-dim);
+        }
+
+        .price-card li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-card li::before {
+            content: "✓";
+            color: var(--accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="hero">
+        <h1>Sync Without Thinking</h1>
+        <p>The next-generation cloud infrastructure built for teams who demand speed, security, and absolute
+            reliability.</p>
+        <a href="#" class="cta-button">Get Started for Free</a>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <h3>Instant Propagation</h3>
+            <p>Our global edge network ensures your files are synced across all devices in sub-50ms latency.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Quantum Security</h3>
+            <p>End-to-end encryption with zero-knowledge architecture. Your data belongs to you alone.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Deep Integrations</h3>
+            <p>Connect CloudSync to your entire workflow with one-click integrations for Slack, GitHub, and Figma.</p>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <h2>Simple, Transparent Pricing</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Individual</h3>
+                <div class="amount">$0</div>
+                <ul>
+                    <li>10GB Cloud Storage</li>
+                    <li>3 Connected Devices</li>
+                    <li>Basic Support</li>
+                </ul>
+                <a href="#" class="cta-button" style="background: transparent; border: 1px solid var(--border)">Choose
+                    Plan</a>
+            </div>
+            <div class="price-card featured">
+                <h3>Team</h3>
+                <div class="amount">$29</div>
+                <ul>
+                    <li>1TB Shared Storage</li>
+                    <li>Unlimited Devices</li>
+                    <li>Priority 24/7 Support</li>
+                    <li>Advanced Permissions</li>
+                </ul>
+                <a href="#" class="cta-button">Most Popular</a>
+            </div>
+            <div class="price-card">
+                <h3>Enterprise</h3>
+                <div class="amount">Custom</div>
+                <ul>
+                    <li>Unlimited Storage</li>
+                    <li>Private Node Deployment</li>
+                    <li>Dedicated Manager</li>
+                    <li>SLA Guarantees</li>
+                </ul>
+                <a href="#" class="cta-button" style="background: transparent; border: 1px solid var(--border)">Contact
+                    Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 60px; color: var(--text-dim); border-top: 1px solid var(--border)">
+        <p>&copy; 2026 CloudSync Inc. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

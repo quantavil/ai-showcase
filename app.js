@@ -1,197 +1,251 @@
-document.addEventListener('alpine:init', () => {
-    Alpine.data('showcase', () => ({
-        // ─── State ───
-        manifest: null,
-        view: 'home',
-        activeCategory: 'all',
-        search: '',
-        selectedPrompt: null,
-        selectedOutput: null,
-        showViewer: false,
-        dark: false,
-        animating: false,
-        typedText: '',
-        outputContent: '',
+// app.js
 
-        // ─── Init ───
-        async init() {
-            this.dark =
-                localStorage.getItem('dark') === 'true' ||
-                (!localStorage.getItem('dark') &&
-                    window.matchMedia('(prefers-color-scheme: dark)').matches);
-            document.documentElement.classList.toggle('dark', this.dark);
+function app() {
+  return {
+    // State
+    darkMode: false,
+    view: 'home',
+    catalog: { categories: {}, prompts: [] },
+    selectedCategory: null,
+    searchQuery: '',
+    currentPrompt: null,
+    currentOutput: null,
+    viewerOpen: false,
+    viewerIndex: 0,
+    showModelCards: false,
+    markdownContent: '',
+    typewriterInterval: null,
 
-            try {
-                const res = await fetch('data/manifest.json');
-                this.manifest = await res.json();
-            } catch (e) {
-                console.error('Failed to load manifest.json:', e);
-            }
+    // Computed
+    get filteredPrompts() {
+      let prompts = this.catalog.prompts || [];
 
-            this.handleHash();
-            window.addEventListener('hashchange', () => this.handleHash());
-        },
+      if (this.selectedCategory) {
+        prompts = prompts.filter(p => p.category === this.selectedCategory);
+      }
 
-        // ─── Computed ───
-        get categoryList() {
-            if (!this.manifest?.categories) return [];
-            return Object.entries(this.manifest.categories).map(
-                ([id, icon]) => ({ id, icon })
-            );
-        },
+      if (this.searchQuery) {
+        const query = this.searchQuery.toLowerCase();
+        prompts = prompts.filter(p =>
+          p.title.toLowerCase().includes(query) ||
+          p.prompt.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query)
+        );
+      }
 
-        get filteredPrompts() {
-            let list = this.manifest?.prompts || [];
-            if (this.activeCategory !== 'all') {
-                list = list.filter((p) => p.category === this.activeCategory);
-            }
-            if (this.search.trim()) {
-                const q = this.search.toLowerCase();
-                list = list.filter(
-                    (p) =>
-                        p.title.toLowerCase().includes(q) ||
-                        p.prompt.toLowerCase().includes(q) ||
-                        p.category.toLowerCase().includes(q)
-                );
-            }
-            return list;
-        },
+      return prompts;
+    },
 
-        get totalModels() {
-            const set = new Set();
-            (this.manifest?.prompts || []).forEach((p) =>
-                p.outputs.forEach((o) => set.add(o.model))
-            );
-            return set.size;
-        },
+    get uniqueModels() {
+      const models = new Set();
+      this.catalog.prompts?.forEach(p => {
+        p.outputs?.forEach(o => models.add(o.model));
+      });
+      return models.size;
+    },
 
-        get totalOutputs() {
-            return (this.manifest?.prompts || []).reduce(
-                (n, p) => n + p.outputs.length,
-                0
-            );
-        },
+    get totalOutputs() {
+      return this.catalog.prompts?.reduce((sum, p) => sum + (p.outputs?.length || 0), 0) || 0;
+    },
 
-        get leaderboard() {
-            const map = {};
-            (this.manifest?.prompts || []).forEach((p) => {
-                p.outputs.forEach((o) => {
-                    if (!map[o.model]) map[o.model] = { total: 0, count: 0 };
-                    map[o.model].total += o.score;
-                    map[o.model].count++;
-                });
-            });
-            return Object.entries(map)
-                .map(([model, d]) => ({
-                    model,
-                    avg: (d.total / d.count).toFixed(1),
-                    count: d.count,
-                }))
-                .sort((a, b) => b.avg - a.avg);
-        },
+    get leaderboardData() {
+      const modelStats = {};
 
-        // ─── Helpers ───
-        getCatIcon(cat) {
-            return this.manifest?.categories?.[cat] || '•';
-        },
+      this.catalog.prompts?.forEach(prompt => {
+        prompt.outputs?.forEach(output => {
+          if (!modelStats[output.model]) {
+            modelStats[output.model] = { totalScore: 0, count: 0 };
+          }
+          modelStats[output.model].totalScore += output.score;
+          modelStats[output.model].count++;
+        });
+      });
 
-        avgScore(prompt) {
-            const scores = prompt.outputs.map((o) => o.score);
-            if (!scores.length) return '—';
-            return (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1);
-        },
+      return Object.entries(modelStats)
+        .map(([name, stats]) => ({
+          name,
+          avgScore: stats.totalScore / stats.count,
+          outputs: stats.count
+        }))
+        .sort((a, b) => b.avgScore - a.avgScore);
+    },
 
-        scoreColor(score) {
-            const n = parseFloat(score);
-            if (n >= 9) return 'text-emerald-600 dark:text-emerald-400';
-            if (n >= 7) return 'text-amber-600 dark:text-amber-400';
-            if (n > 0) return 'text-red-500 dark:text-red-400';
-            return 'text-neutral-400';
-        },
+    // Lifecycle
+    init() {
+      this.darkMode = localStorage.getItem('darkMode') === 'true';
 
-        // ─── Actions ───
-        async selectPrompt(prompt) {
-            this.selectedPrompt = prompt;
-            this.view = 'prompt';
-            this.animating = true;
-            this.typedText = '';
-            window.location.hash = prompt.id;
-            window.scrollTo({ top: 0, behavior: 'instant' });
+      // Load data first, then handle hash
+      this.loadCatalog().then(() => {
+        this.handleHash();
+      });
 
-            // typewriter
-            const text = prompt.prompt;
-            const speed = Math.max(6, Math.min(28, 1000 / text.length));
-            for (let i = 0; i <= text.length; i++) {
-                this.typedText = text.slice(0, i);
-                await this.sleep(speed);
-            }
-            await this.sleep(500);
-            this.animating = false;
-        },
+      window.addEventListener('hashchange', () => this.handleHash());
+    },
 
-        async viewOutput(output) {
-            this.selectedOutput = output;
-            if (!output.file.endsWith('.html')) {
-                try {
-                    const res = await fetch(output.file);
-                    const text = await res.text();
-                    this.outputContent = marked.parse(text);
-                } catch {
-                    this.outputContent =
-                        '<p style="color:#ef4444">Failed to load output file.</p>';
-                }
-            }
-            this.showViewer = true;
-            document.body.style.overflow = 'hidden';
-        },
+    // Methods
+    async loadCatalog() {
+      try {
+        const response = await fetch('data/catalog.json');
+        if (!response.ok) throw new Error('Network response was not ok');
+        this.catalog = await response.json();
+      } catch (error) {
+        console.error('Failed to load catalog:', error);
+      }
+    },
 
-        closeViewer() {
-            this.showViewer = false;
-            this.selectedOutput = null;
-            this.outputContent = '';
-            document.body.style.overflow = '';
-        },
+    handleHash() {
+      const hash = window.location.hash.slice(1);
 
-        goHome() {
-            this.view = 'home';
-            this.selectedPrompt = null;
-            this.closeViewer();
-            this.animating = false;
-            window.location.hash = '';
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        },
+      if (hash === 'leaderboard') {
+        this.view = 'leaderboard';
+      } else if (hash && this.catalog.prompts) {
+        const prompt = this.catalog.prompts.find(p => p.id === hash);
+        if (prompt) {
+          this.loadPromptState(prompt);
+        }
+      } else {
+        this.view = 'home';
+      }
+    },
 
-        toggleView(name) {
-            if (this.view === name) {
-                this.goHome();
-            } else {
-                this.view = name;
-                this.selectedPrompt = null;
-                window.location.hash = '';
-                window.scrollTo({ top: 0, behavior: 'instant' });
-            }
-        },
+    resetToHome() {
+      window.location.hash = '';
+      this.view = 'home';
+      this.currentPrompt = null;
+      this.showModelCards = false;
+    },
 
-        toggleDark() {
-            this.dark = !this.dark;
-            document.documentElement.classList.toggle('dark', this.dark);
-            localStorage.setItem('dark', this.dark);
-        },
+    openPrompt(prompt) {
+      window.location.hash = prompt.id;
+      // State will be updated by handleHash via the hashchange event,
+      // but we call loadPromptState directly to avoid race conditions with clicking.
+      this.loadPromptState(prompt);
+    },
 
-        handleHash() {
-            const id = window.location.hash.slice(1);
-            if (id && this.manifest) {
-                const p = this.manifest.prompts.find((x) => x.id === id);
-                if (p) {
-                    this.selectedPrompt = p;
-                    this.view = 'prompt';
-                    this.animating = false;
-                }
-            }
-        },
+    loadPromptState(prompt) {
+      this.currentPrompt = prompt;
+      this.view = 'prompt';
+      this.showModelCards = false;
 
-        sleep(ms) {
-            return new Promise((r) => setTimeout(r, ms));
-        },
-    }));
-});
+      // Wait for DOM update to ensure typewriter ref exists
+      requestAnimationFrame(() => {
+        this.startTypewriter(prompt.prompt);
+      });
+    },
+
+    startTypewriter(text) {
+      if (this.typewriterInterval) clearInterval(this.typewriterInterval);
+
+      const container = this.$refs.typewriterContainer;
+      if (!container) return;
+
+      container.innerHTML = '';
+      const cursor = document.createElement('span');
+      cursor.className = 'typewriter-cursor';
+
+      let index = 0;
+      // Faster speed for better UX
+      const speed = 10;
+
+      this.typewriterInterval = setInterval(() => {
+        if (index < text.length) {
+          container.textContent = text.substring(0, index + 1);
+          container.appendChild(cursor);
+          index++;
+        } else {
+          clearInterval(this.typewriterInterval);
+          this.typewriterInterval = null;
+
+          setTimeout(() => {
+            this.showModelCards = true;
+          }, 200);
+        }
+      }, speed);
+    },
+
+    openViewer(output, index) {
+      this.currentOutput = output;
+      this.viewerIndex = index;
+      this.viewerOpen = true;
+
+      if (output.file.endsWith('.md')) {
+        this.loadMarkdown(output.file);
+      } else if (output.file.endsWith('.txt')) {
+        this.loadPlainText(output.file);
+      }
+    },
+
+    closeViewer() {
+      this.viewerOpen = false;
+    },
+
+    navigateViewer(direction) {
+      if (!this.currentPrompt) return;
+
+      const newIndex = this.viewerIndex + direction;
+      if (newIndex >= 0 && newIndex < this.currentPrompt.outputs.length) {
+        this.viewerIndex = newIndex;
+        this.currentOutput = this.currentPrompt.outputs[newIndex];
+
+        if (this.currentOutput.file.endsWith('.md')) {
+          this.loadMarkdown(this.currentOutput.file);
+        } else if (this.currentOutput.file.endsWith('.txt')) {
+          this.loadPlainText(this.currentOutput.file);
+        }
+      }
+    },
+
+    async loadMarkdown(file) {
+      try {
+        const response = await fetch(this.getOutputPath(file));
+        const text = await response.text();
+        this.markdownContent = marked.parse(text);
+      } catch (error) {
+        this.markdownContent = '<p class="text-red-500">Failed to load content.</p>';
+      }
+    },
+
+    async loadPlainText(file) {
+      try {
+        const response = await fetch(this.getOutputPath(file));
+        const text = await response.text();
+        // Simple escaping and wrapping in pre for text files
+        const escaped = text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+        this.markdownContent = `<pre class="whitespace-pre-wrap font-mono text-sm">${escaped}</pre>`;
+      } catch (error) {
+        this.markdownContent = '<p class="text-red-500">Failed to load content.</p>';
+      }
+    },
+
+    getOutputPath(file) {
+      return `outputs/${this.currentPrompt.id}/${file}`;
+    },
+
+    getAvgScore(prompt) {
+      if (!prompt.outputs?.length) return 0;
+      return prompt.outputs.reduce((sum, o) => sum + o.score, 0) / prompt.outputs.length;
+    },
+
+    getScoreColor(score) {
+      if (!score) return 'bg-neutral-300';
+      if (score >= 9) return 'bg-emerald-500';
+      if (score >= 7) return 'bg-amber-400';
+      return 'bg-red-500';
+    },
+
+    getScoreTextColor(score) {
+      if (!score) return 'text-neutral-400';
+      if (score >= 9) return 'text-emerald-600 dark:text-emerald-400';
+      if (score >= 7) return 'text-amber-600 dark:text-amber-400';
+      return 'text-red-600 dark:text-red-400';
+    },
+
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode;
+      localStorage.setItem('darkMode', this.darkMode);
+    }
+  };
+}
