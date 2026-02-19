@@ -12,4 +12,7 @@ This project is a collection of outputs from various AI models (GPT-4o, Claude 3
 
 ## How to View
 
-Open `index.html` in your browser to explore the showcase.
+
+## License
+
+This project is licensed under the Mozilla Public License 2.0 (MPL-2.0). See the [LICENSE](LICENSE) file for the full text.
