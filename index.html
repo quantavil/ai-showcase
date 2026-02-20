@@ -9,9 +9,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,197 +35,47 @@
   <!-- Marked.js for Markdown -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-  <style>
-    [x-cloak] {
-      display: none !important;
-    }
-
-    ::selection {
-      background-color: #1c1917;
-      color: #fafaf9;
-    }
-
-    .dark ::selection {
-      background-color: #fafaf9;
-      color: #1c1917;
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #a8a29e;
-    }
-
-    .dark ::-webkit-scrollbar-thumb {
-      background: #525252;
-    }
-
-    .line-clamp-2 {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(16px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .prompt-card,
-    .model-card,
-    .leaderboard-row {
-      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-    }
-
-    /* Typewriter Cursor */
-    .typewriter-cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.1em;
-      background-color: #22c55e;
-      margin-left: 2px;
-      animation: blink 1s step-end infinite;
-      vertical-align: text-bottom;
-    }
-
-    @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0;
-      }
-    }
-
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible,
-    textarea:focus-visible {
-      outline: 2px solid #1c1917;
-      outline-offset: 2px;
-    }
-
-    .dark button:focus-visible,
-    .dark a:focus-visible,
-    .dark input:focus-visible,
-    .dark textarea:focus-visible {
-      outline-color: #fafaf9;
-    }
-
-    .prose {
-      --tw-prose-body: #57534e;
-      --tw-prose-headings: #1c1917;
-      --tw-prose-links: #1c1917;
-      --tw-prose-code: #1c1917;
-      --tw-prose-pre-bg: #f5f5f4;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    .dark .prose {
-      --tw-prose-body: #a3a3a3;
-      --tw-prose-headings: #fafaf9;
-      --tw-prose-links: #fafaf9;
-      --tw-prose-code: #fafaf9;
-      --tw-prose-pre-bg: #262626;
-    }
-
-    .prose pre {
-      border: 1px solid #e7e5e4;
-      background: #fafaf9;
-    }
-
-    .dark .prose pre {
-      border-color: #404040;
-      background: #171717;
-    }
-
-    .prose code {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.8em;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      .prompt-card,
-      .model-card,
-      .leaderboard-row {
-        animation: none;
-        opacity: 1;
-      }
-
-      * {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
-<body
-  class="bg-stone-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200 font-sans antialiased transition-colors duration-300">
+<body class="bg-stone-50 dark:bg-neutral-900 text-neutral-900 dark:text-stone-100 font-sans antialiased transition-colors duration-300">
 
   <!-- Noise Texture Overlay -->
-  <div class="fixed inset-0 pointer-events-none opacity-[0.02] dark:opacity-[0.03]"
-    style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');">
-  </div>
+  <div class="fixed inset-0 pointer-events-none opacity-[0.03] dark:opacity-[0.02]"
+    style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 256 256%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noise%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noise)%22/%3E%3C/svg%3E');"></div>
 
   <div class="relative min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header
-      class="sticky top-0 z-40 bg-stone-50/95 dark:bg-neutral-900/95 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-800">
+    <header class="sticky top-0 z-40 bg-stone-50/90 dark:bg-neutral-900/90 backdrop-blur-sm border-b border-neutral-200 dark:border-neutral-800">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <a href="#" @click.prevent="resetToHome()" class="flex items-center gap-3 group">
-            <div class="w-8 h-8 bg-neutral-900 dark:bg-neutral-200 flex items-center justify-center">
-              <span class="text-stone-50 dark:text-neutral-900 font-mono text-xs font-bold">AI</span>
+            <div class="w-9 h-9 bg-neutral-900 dark:bg-stone-100 flex items-center justify-center transition-colors">
+              <span class="text-stone-100 dark:text-neutral-900 font-mono text-xs font-bold">AI</span>
             </div>
             <span class="font-bold text-lg tracking-tight uppercase">Showcase</span>
           </a>
 
           <nav class="flex items-center gap-2 sm:gap-4">
-            <!-- New Playground Button -->
-            <button @click="view = 'playground'; window.location.hash = 'playground'"
-              class="hidden sm:block px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors"
-              :class="view === 'playground' ? 'text-neutral-900 dark:text-neutral-200' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200'">
-              Playground
-            </button>
-
             <button @click="view = 'leaderboard'; window.location.hash = '#leaderboard'"
               class="px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors"
-              :class="view === 'leaderboard' ? 'text-neutral-900 dark:text-neutral-200' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200'">
+              :class="view === 'leaderboard' ? 'text-neutral-900 dark:text-stone-100 font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-stone-100'">
               Leaderboard
+            </button>
+            <button @click="view = 'playground'; window.location.hash = '#playground'"
+              class="hidden sm:block px-3 py-2 text-xs font-mono uppercase tracking-wider transition-colors"
+              :class="view === 'playground' ? 'text-neutral-900 dark:text-stone-100 font-semibold' : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-stone-100'">
+              Playground
             </button>
             <button @click="toggleDarkMode()"
               class="w-10 h-10 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
               aria-label="Toggle dark mode">
               <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
               </svg>
               <svg x-show="darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </button>
           </nav>
@@ -239,21 +87,20 @@
     <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
 
       <!-- Home View -->
-      <div x-show="view === 'home'" x-cloak x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+      <div x-show="view === 'home'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
 
         <!-- Filters -->
         <section class="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
           <div class="flex flex-wrap gap-2">
             <button @click="selectedCategory = null"
-              class="category-pill px-4 py-2 text-xs font-mono uppercase tracking-wider border transition-all"
-              :class="selectedCategory === null ? 'bg-neutral-900 dark:bg-neutral-200 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-neutral-200' : 'border-neutral-300 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500'">
+              class="px-4 py-2 text-xs font-mono uppercase tracking-wider border transition-all"
+              :class="selectedCategory === null ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-stone-100' : 'border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500 dark:hover:border-neutral-300'">
               All
             </button>
             <template x-for="[id, icon] in Object.entries(catalog.categories || {})" :key="id">
               <button @click="selectedCategory = id"
-                class="category-pill px-4 py-2 text-xs font-mono uppercase tracking-wider border transition-all"
-                :class="selectedCategory === id ? 'bg-neutral-900 dark:bg-neutral-200 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-neutral-200' : 'border-neutral-300 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500'">
+                class="px-4 py-2 text-xs font-mono uppercase tracking-wider border transition-all"
+                :class="selectedCategory === id ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-stone-100' : 'border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500 dark:hover:border-neutral-300'">
                 <span x-text="icon" class="mr-1"></span>
                 <span x-text="id"></span>
               </button>
@@ -261,318 +108,357 @@
           </div>
 
           <div class="relative w-full sm:w-64">
-            <input type="text" x-model="searchQuery" placeholder="Search prompts..."
+            <input type="text" x-model="searchQuery" placeholder="Search..."
               class="w-full px-4 py-2 pl-10 bg-transparent border border-neutral-300 dark:border-neutral-700 text-sm font-mono placeholder:text-neutral-400 focus:outline-none focus:border-neutral-500 dark:focus:border-neutral-400 transition-colors">
-            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" fill="none"
-              stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
         </section>
 
         <!-- Prompt Grid -->
-        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <template x-for="(prompt, index) in filteredPrompts" :key="prompt.id">
             <article
-              class="prompt-card group cursor-pointer border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all duration-200 bg-white dark:bg-neutral-900/50"
+              class="prompt-card group cursor-pointer bg-white dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 hover:shadow-lg transition-all duration-200"
               @click="openPrompt(prompt)" :style="`animation-delay: ${index * 50}ms`">
-              <div class="p-5 sm:p-6">
-                <div class="flex items-center justify-between mb-4">
-                  <span
-                    class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 flex items-center gap-1">
-                    <span x-text="catalog.categories[prompt.category]"></span>
-                    <span x-text="prompt.category"></span>
-                  </span>
-                  <span class="font-mono text-xs text-neutral-400 uppercase"
-                    x-text="prompt.outputs.length + ' outputs'"></span>
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-4 text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
+                  <span x-text="catalog.categories[prompt.category] + ' ' + prompt.category"></span>
+                  <span x-text="prompt.outputs.length + ' outputs'"></span>
                 </div>
 
-                <h3 class="text-base font-semibold mb-3 leading-tight" x-text="prompt.title"></h3>
+                <h3 class="text-lg font-semibold mb-3 leading-snug" x-text="prompt.title"></h3>
 
-                <p class="text-sm text-neutral-600 dark:text-neutral-400 font-mono line-clamp-2 mb-4"
-                  x-text="prompt.prompt.substring(0, 80) + '...'"></p>
+                <p class="text-sm text-neutral-500 dark:text-neutral-400 font-mono line-clamp-2 mb-5" x-text="prompt.prompt.substring(0, 80) + '...'"></p>
 
-                <div class="flex items-center gap-2">
-                  <div class="flex-1 h-0.5 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-                    <div class="h-full transition-all duration-500" :class="getScoreColor(getAvgScore(prompt))"
-                      :style="`width: ${getAvgScore(prompt) * 10}%`"></div>
+                <div class="flex items-center gap-3">
+                  <div class="flex-1 h-1 bg-neutral-100 dark:bg-neutral-700 overflow-hidden">
+                    <div class="h-full transition-all duration-500 ease-out" :class="getScoreColor(getAvgScore(prompt))" :style="`width: ${getAvgScore(prompt) * 10}%`"></div>
                   </div>
-                  <span class="font-mono text-xs font-medium" :class="getScoreTextColor(getAvgScore(prompt))"
-                    x-text="getAvgScore(prompt).toFixed(1)"></span>
+                  <span class="font-mono text-xs font-bold tabular-nums" :class="getScoreTextColor(getAvgScore(prompt))" x-text="getAvgScore(prompt).toFixed(1)"></span>
                 </div>
               </div>
             </article>
           </template>
         </section>
-
-        <div x-show="filteredPrompts.length === 0 && catalog.prompts" class="text-center py-16">
-          <p class="text-neutral-500 dark:text-neutral-400 font-mono text-sm">No prompts found</p>
+        
+        <div x-show="filteredPrompts.length === 0 && catalog.prompts" class="text-center py-20">
+           <div class="inline-block px-4 py-2 border border-neutral-200 dark:border-neutral-700 text-neutral-400 font-mono text-sm">
+             No prompts found
+           </div>
         </div>
       </div>
 
       <!-- Prompt Detail View -->
-      <div x-show="view === 'prompt'" x-cloak x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+      <div x-show="view === 'prompt'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
         <template x-if="currentPrompt">
           <div>
             <button @click="resetToHome()"
-              class="group flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-widest text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200 transition-colors">
-              <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
+              class="group flex items-center gap-2 mb-6 text-xs font-mono uppercase tracking-widest text-neutral-400 hover:text-neutral-900 dark:hover:text-stone-100 transition-colors">
+              <svg class="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
               </svg>
-              Back
+              Back to Grid
             </button>
 
-            <header class="mb-8 border-b border-neutral-200 dark:border-neutral-800 pb-8">
-              <div class="flex items-center gap-2 mb-4">
-                <span
-                  class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400 flex items-center gap-1">
-                  <span x-text="catalog.categories[currentPrompt.category]"></span>
-                  <span x-text="currentPrompt.category"></span>
-                </span>
+            <header class="mb-8">
+              <div class="flex items-center gap-2 mb-2 text-xs font-mono uppercase tracking-widest text-neutral-400">
+                <span x-text="catalog.categories[currentPrompt.category] + ' ' + currentPrompt.category"></span>
               </div>
-              <h1 class="text-2xl sm:text-3xl font-bold tracking-tight" x-text="currentPrompt.title"></h1>
+              <h1 class="text-3xl sm:text-4xl font-bold tracking-tight" x-text="currentPrompt.title"></h1>
             </header>
 
-            <!-- Terminal with Typewriter -->
-            <div
-              class="mb-8 border border-neutral-300 dark:border-neutral-700 bg-neutral-900 dark:bg-black overflow-hidden shadow-sm">
-              <div class="flex items-center gap-2 px-4 py-3 border-b border-neutral-800 bg-neutral-900">
-                <div class="flex gap-1.5">
-                  <div class="w-2.5 h-2.5 bg-red-500"></div>
-                  <div class="w-2.5 h-2.5 bg-amber-500"></div>
-                  <div class="w-2.5 h-2.5 bg-green-500"></div>
-                </div>
+            <!-- Prompt Box -->
+            <div class="mb-10 border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 overflow-hidden">
+              <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-100 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/50">
+                <span class="font-mono text-xs text-neutral-500 uppercase tracking-wider">Prompt</span>
+                <button @click="copyToClipboard(currentPrompt.prompt, 'Prompt copied')"
+                  class="text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors">
+                  Copy
+                </button>
               </div>
-              <div class="p-4 sm:p-6 font-mono text-sm text-stone-50 min-h-[120px]">
-                <div class="flex items-start gap-2 mb-4">
-                  <span class="text-green-400 select-none">$</span>
-                  <span x-ref="typewriterContainer" class="whitespace-pre-wrap"></span>
-                </div>
-                <div x-show="showModelCards" class="transition-opacity duration-500"
-                  :class="showModelCards ? 'opacity-100' : 'opacity-0'">
-                  <div class="flex items-center gap-2 text-green-400 text-xs">
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>Execution complete — <span x-text="currentPrompt.outputs.length"></span> model responses
-                      captured</span>
-                  </div>
-                </div>
+              <div class="p-6 font-mono text-sm text-neutral-800 dark:text-stone-100 leading-relaxed whitespace-pre-wrap">
+                <span x-text="currentPrompt.prompt"></span>
               </div>
             </div>
 
             <!-- Model Cards -->
-            <div x-show="showModelCards" x-cloak class="transition-opacity duration-500"
-              :class="showModelCards ? 'opacity-100' : 'opacity-0'">
-              <h2
-                class="text-lg font-bold mb-6 uppercase tracking-tight border-l-4 border-neutral-900 dark:border-neutral-200 pl-4">
-                Model Outputs</h2>
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <template x-for="(output, index) in currentPrompt.outputs" :key="output.model">
-                  <article
-                    class="model-card group cursor-pointer border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-all duration-200 bg-white dark:bg-neutral-900/50"
-                    @click="openViewer(output, index)" :style="`animation-delay: ${index * 100}ms`">
-                    <div class="p-5 sm:p-6">
-                      <h3 class="text-base font-semibold mb-3" x-text="output.model"></h3>
+            <h2 class="text-sm font-bold mb-6 uppercase tracking-widest text-neutral-400">
+              Model Outputs <span class="text-neutral-300 dark:text-neutral-600" x-text="`(${currentPrompt.outputs.length})`"></span>
+            </h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <template x-for="(output, index) in currentPrompt.outputs" :key="output.model">
+                <article
+                  class="model-card group cursor-pointer bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-500 transition-all duration-200"
+                  @click="openViewer(output, index)" :style="`animation-delay: ${index * 50}ms`">
+                  <div class="p-5">
+                    <h3 class="text-base font-semibold mb-3 truncate" x-text="output.model"></h3>
 
-                      <div class="flex items-center gap-3 mb-4">
-                        <div class="flex-1 h-0.5 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-                          <div class="h-full transition-all duration-700 ease-out" :class="getScoreColor(output.score)"
-                            :style="`width: ${output.score * 10}%`"></div>
-                        </div>
-                        <span class="font-mono text-xs font-medium" :class="getScoreTextColor(output.score)"
-                          x-text="output.score.toFixed(1)"></span>
+                    <div class="flex items-center gap-3 mb-4">
+                      <div class="flex-1 h-1 bg-neutral-100 dark:bg-neutral-700 overflow-hidden">
+                        <div class="h-full transition-all duration-500 ease-out" :class="getScoreColor(output.score)" :style="`width: ${output.score * 10}%`"></div>
                       </div>
-
-                      <div class="flex items-center justify-between">
-                        <span class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400"
-                          x-text="output.file.split('.').pop().toUpperCase()"></span>
-                        <span
-                          class="font-mono text-xs text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors uppercase">
-                          View
-                          <svg
-                            class="inline-block w-3 h-3 ml-1 transform group-hover:translate-x-1 transition-transform"
-                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                          </svg>
-                        </span>
-                      </div>
+                      <span class="font-mono text-xs font-bold tabular-nums" :class="getScoreTextColor(output.score)" x-text="output.score.toFixed(1)"></span>
                     </div>
-                  </article>
-                </template>
-              </div>
+
+                    <div class="flex items-center justify-between text-xs font-mono uppercase text-neutral-400 dark:text-neutral-500">
+                      <span x-text="output.file.split('.').pop()"></span>
+                      <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                  </div>
+                </article>
+              </template>
             </div>
           </div>
         </template>
       </div>
 
       <!-- Leaderboard View -->
-      <div x-show="view === 'leaderboard'" x-cloak x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
-        <header class="mb-8 border-b border-neutral-200 dark:border-neutral-800 pb-8">
-          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Leaderboard</h1>
-          <p class="text-neutral-600 dark:text-neutral-400 font-mono text-xs uppercase tracking-wider">Models ranked by
-            average score</p>
+      <div x-show="view === 'leaderboard'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
+        <header class="mb-8">
+          <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Leaderboard</h1>
+          <p class="text-neutral-400 font-mono text-xs uppercase tracking-wider">Models ranked by average score</p>
         </header>
 
-        <div class="grid gap-3">
-          <template x-for="(model, index) in leaderboardData" :key="model.name">
+        <!-- Category Filters -->
+        <div class="mb-6 flex flex-wrap gap-2">
+            <button @click="leaderboardCategory = null"
+              class="px-3 py-1.5 text-xs font-mono uppercase tracking-wider border transition-all"
+              :class="leaderboardCategory === null ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-stone-100' : 'border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500'">
+              All
+            </button>
+            <template x-for="[id, icon] in Object.entries(catalog.categories || {})" :key="id">
+              <button @click="leaderboardCategory = id"
+                class="px-3 py-1.5 text-xs font-mono uppercase tracking-wider border transition-all"
+                :class="leaderboardCategory === id ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-stone-100' : 'border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400 hover:border-neutral-500'">
+                <span x-text="icon" class="mr-1"></span>
+                <span x-text="id"></span>
+              </button>
+            </template>
+        </div>
+
+        <div class="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 divide-y divide-neutral-100 dark:divide-neutral-700">
+          <template x-for="(model, index) in filteredLeaderboard" :key="model.name">
             <article
-              class="leaderboard-row flex items-center gap-4 sm:gap-6 p-4 sm:p-5 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors bg-white dark:bg-neutral-900/50"
-              :style="`animation-delay: ${index * 50}ms`">
-              <div
-                class="w-10 h-10 flex items-center justify-center border border-neutral-200 dark:border-neutral-700 font-mono text-sm font-bold flex-shrink-0"
-                :class="{ 'bg-neutral-900 dark:bg-neutral-200 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-neutral-200': index < 3 }">
+              class="leaderboard-row flex items-center gap-4 sm:gap-6 p-4 hover:bg-neutral-50 dark:hover:bg-neutral-700/50 transition-colors"
+              :style="`animation-delay: ${index * 30}ms`">
+              
+              <div class="w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 font-mono text-xs font-bold flex-shrink-0"
+                :class="{ 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 border-neutral-900 dark:border-stone-100': index < 3 }">
                 <span x-text="index + 1"></span>
               </div>
 
               <div class="flex-1 min-w-0">
-                <h3 class="text-sm sm:text-base font-semibold truncate" x-text="model.name"></h3>
-                <div class="flex items-center gap-4 mt-2">
-                  <span class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400"
-                    x-text="model.outputs + ' outputs'"></span>
-                  <div class="flex-1 max-w-xs h-0.5 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
-                    <div class="h-full transition-all duration-700" :class="getScoreColor(model.avgScore)"
-                      :style="`width: ${model.avgScore * 10}%`"></div>
-                  </div>
-                </div>
+                <h3 class="text-sm font-semibold truncate" x-text="model.name"></h3>
               </div>
 
-              <div class="text-right">
-                <span class="text-xl sm:text-2xl font-bold font-mono" :class="getScoreTextColor(model.avgScore)"
-                  x-text="model.avgScore.toFixed(2)"></span>
+              <div class="flex items-center gap-4">
+                 <span class="font-mono text-xs text-neutral-400 hidden sm:block" x-text="model.outputs + ' outputs'"></span>
+                 <div class="w-24 h-1 bg-neutral-100 dark:bg-neutral-700 overflow-hidden">
+                    <div class="h-full transition-all duration-500" :class="getScoreColor(model.avgScore)" :style="`width: ${model.avgScore * 10}%`"></div>
+                 </div>
+                 <span class="font-mono text-sm font-bold tabular-nums w-12 text-right" :class="getScoreTextColor(model.avgScore)" x-text="model.avgScore.toFixed(2)"></span>
               </div>
             </article>
           </template>
         </div>
       </div>
 
-      <!-- HTML Playground View -->
-      <div x-show="view === 'playground'" x-cloak x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-        class="h-[calc(100vh-9rem)] flex flex-col">
+      <!-- Playground View -->
+      <div x-show="view === 'playground'" x-cloak x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" class="h-[calc(100vh-12rem)] flex flex-col">
         <header class="mb-4 flex items-center justify-between">
           <div>
             <h1 class="text-2xl font-bold tracking-tight">HTML Playground</h1>
-            <p class="text-neutral-500 dark:text-neutral-400 font-mono text-xs">Paste HTML to preview live</p>
+            <p class="text-neutral-400 font-mono text-xs mt-1">Live preview environment</p>
           </div>
           <button @click="openPlaygroundPreview()"
-            class="px-4 py-2 border border-neutral-300 dark:border-neutral-700 font-mono text-xs uppercase hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
-            <span>Full Preview</span>
+            class="px-4 py-2 bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900 font-mono text-xs uppercase hover:bg-neutral-800 dark:hover:bg-stone-50 transition-colors">
+            Fullscreen
           </button>
         </header>
 
-        <div class="flex-1 flex gap-6 overflow-hidden">
-          <!-- Editor Pane -->
-          <div class="flex-1 w-1/2 transition-all duration-300">
-            <!-- Removed Header Label -->
-            <textarea x-model="playgroundCode"
-              class="w-full h-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 p-4 font-mono text-sm resize-none focus:outline-none focus:border-neutral-500"
+        <div class="flex-1 flex gap-4 overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 p-2">
+          <div class="flex-1 w-1/2 flex flex-col">
+             <div class="px-2 py-1 text-xs font-mono uppercase text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2">Editor</div>
+             <textarea x-model="playgroundCode"
+              class="flex-1 w-full bg-transparent p-2 font-mono text-sm resize-none focus:outline-none"
               placeholder="Paste your HTML here..."></textarea>
           </div>
-
-          <!-- Preview Pane -->
-          <div class="flex-1 w-1/2 transition-all duration-300">
-            <!-- Removed Header Label -->
-            <div
-              class="w-full h-full bg-white dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-800 overflow-hidden relative">
-              <iframe :srcdoc="playgroundCode" class="w-full h-full border-0 absolute inset-0"></iframe>
-            </div>
+          <div class="flex-1 w-1/2 flex flex-col bg-white dark:bg-neutral-900 border-l border-neutral-100 dark:border-neutral-700">
+             <div class="px-2 py-1 text-xs font-mono uppercase text-neutral-400 border-b border-neutral-100 dark:border-neutral-700 mb-2">Output</div>
+             <div class="flex-1 overflow-hidden relative bg-white">
+                <iframe :srcdoc="playgroundCode" class="w-full h-full border-0 absolute inset-0 bg-white"></iframe>
+             </div>
           </div>
         </div>
       </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="border-t border-neutral-200 dark:border-neutral-800 mt-auto py-6">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="font-mono text-xs uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-            AI Showcase — Model Output Catalog
-          </p>
-        </div>
-      </div>
-    </footer>
   </div>
 
   <!-- Fullscreen Viewer Modal -->
-  <div x-show="viewerOpen" x-cloak x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-    x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
-    x-transition:leave-end="opacity-0" class="fixed inset-0 z-50 bg-neutral-950" @keydown.escape.window="closeViewer()"
-    @keydown.left.window="navigateViewer(-1)" @keydown.right.window="navigateViewer(1)"
+  <div x-show="viewerOpen" x-cloak
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-50 bg-stone-100 dark:bg-neutral-900 flex flex-col"
+    @keydown.escape.window="closeViewer()"
     x-trap.inert.noscroll="viewerOpen" role="dialog" aria-modal="true">
 
     <!-- Viewer Header -->
-    <div class="absolute top-0 left-0 right-0 z-10 bg-neutral-900/80 backdrop-blur-sm border-b border-neutral-800">
-      <div class="flex items-center justify-between px-4 sm:px-6 py-3">
-        <button @click="closeViewer()"
-          class="w-9 h-9 flex items-center justify-center border border-neutral-700 hover:bg-neutral-800 text-stone-50 transition-colors"
-          aria-label="Close viewer">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-
-        <div class="flex items-center gap-4">
-          <template x-if="viewerMode === 'catalog'">
-            <div class="flex items-center gap-3">
-              <div class="w-20 h-0.5 bg-neutral-700 overflow-hidden">
-                <div class="h-full" :class="getScoreColor(currentOutput?.score)"
-                  :style="`width: ${(currentOutput?.score || 0) * 10}%`"></div>
-              </div>
-              <span class="font-mono text-xs font-bold" :class="getScoreTextColor(currentOutput?.score)"
-                x-text="currentOutput?.score?.toFixed(1)"></span>
+    <div class="flex-shrink-0 border-b border-neutral-200 dark:border-neutral-700 bg-stone-50 dark:bg-neutral-800">
+        
+        <!-- Single View Header -->
+        <div x-show="!viewerSplitMode" class="flex items-center justify-between px-4 py-2 h-12">
+            <!-- Left: Nav -->
+            <div class="flex items-center gap-2">
+                <button @click="navigateViewer(-1)" :disabled="viewerIndex === 0"
+                    class="w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 disabled:opacity-30 transition-colors"
+                    aria-label="Previous">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+                <button @click="navigateViewer(1)" :disabled="viewerIndex === currentPrompt?.outputs.length - 1"
+                    class="w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 disabled:opacity-30 transition-colors"
+                    aria-label="Next">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
+                <span class="font-mono text-xs text-neutral-400 ml-2" x-text="`${viewerIndex + 1}/${currentPrompt?.outputs.length}`"></span>
             </div>
-          </template>
-          <template x-if="viewerMode === 'playground'">
-            <span class="font-mono text-xs uppercase tracking-widest text-neutral-400">Playground Preview</span>
-          </template>
-          <span x-show="viewerMode === 'catalog'" class="font-mono text-xs text-neutral-500"
-            x-text="`${viewerIndex + 1} / ${currentPrompt?.outputs.length}`"></span>
+
+            <!-- Center: Model Selector -->
+            <div class="flex items-center gap-3 absolute left-1/2 transform -translate-x-1/2">
+                <select @change="switchModel($event.target.value)" 
+                    class="bg-transparent border border-neutral-200 dark:border-neutral-600 px-3 py-1 text-sm font-semibold focus:outline-none focus:border-neutral-400 dark:focus:border-neutral-400 appearance-none cursor-pointer text-center"
+                    :value="currentOutput?.model">
+                    <template x-for="out in currentPrompt?.outputs" :key="out.model">
+                        <option :value="out.model" x-text="out.model"></option>
+                    </template>
+                </select>
+                
+                <div class="flex items-center gap-2">
+                    <div class="w-16 h-1 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
+                        <div class="h-full" :class="getScoreColor(currentOutput?.score)" :style="`width: ${(currentOutput?.score || 0) * 10}%`"></div>
+                    </div>
+                    <span class="font-mono text-xs font-bold tabular-nums" :class="getScoreTextColor(currentOutput?.score)" x-text="currentOutput?.score?.toFixed(1)"></span>
+                </div>
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center gap-2">
+                <div class="flex border border-neutral-200 dark:border-neutral-600 overflow-hidden">
+                    <button @click="viewerShowCode = false" class="px-3 py-1 text-xs font-mono uppercase" :class="!viewerShowCode ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900' : 'hover:bg-neutral-100 dark:hover:bg-neutral-700'">Preview</button>
+                    <button @click="viewerShowCode = true; loadCode(currentOutput.file)" class="px-3 py-1 text-xs font-mono uppercase" :class="viewerShowCode ? 'bg-neutral-900 dark:bg-stone-100 text-stone-50 dark:text-neutral-900' : 'hover:bg-neutral-100 dark:hover:bg-neutral-700'">Code</button>
+                </div>
+                <button @click="copyCurrentOutput()" class="p-1.5 border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors" title="Copy">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                </button>
+                <button @click="toggleSplitView()" class="w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors" title="Split View">
+                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+                </button>
+                <button @click="closeViewer()" class="w-8 h-8 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-200 dark:hover:border-red-700 hover:text-red-600 transition-colors" title="Close">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
         </div>
 
-        <div class="flex items-center gap-2" x-show="viewerMode === 'catalog'">
-          <button @click="navigateViewer(-1)" :disabled="viewerIndex === 0"
-            class="w-9 h-9 flex items-center justify-center border border-neutral-700 hover:bg-neutral-800 text-stone-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            aria-label="Previous model">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button @click="navigateViewer(1)" :disabled="viewerIndex === currentPrompt?.outputs.length - 1"
-            class="w-9 h-9 flex items-center justify-center border border-neutral-700 hover:bg-neutral-800 text-stone-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-            aria-label="Next model">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+        <!-- Split View Header -->
+        <div x-show="viewerSplitMode" class="flex w-full">
+            <!-- Left Panel Header -->
+            <div class="flex-1 flex items-center justify-between px-4 py-2 border-r border-neutral-200 dark:border-neutral-700">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono text-neutral-400">Left:</span>
+                    <select @change="updatePanel(0, $event.target.value)" 
+                        class="bg-transparent border border-neutral-200 dark:border-neutral-600 px-2 py-1 text-xs font-semibold focus:outline-none appearance-none cursor-pointer"
+                        :value="currentOutput?.model">
+                        <template x-for="out in currentPrompt?.outputs" :key="out.model">
+                            <option :value="out.model" x-text="out.model"></option>
+                        </template>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                     <div class="w-12 h-0.5 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
+                        <div class="h-full" :class="getScoreColor(currentOutput?.score)" :style="`width: ${(currentOutput?.score || 0) * 10}%`"></div>
+                    </div>
+                    <span class="font-mono text-xs font-bold tabular-nums" :class="getScoreTextColor(currentOutput?.score)" x-text="currentOutput?.score?.toFixed(1)"></span>
+                </div>
+            </div>
+            
+            <!-- Right Panel Header -->
+            <div class="flex-1 flex items-center justify-between px-4 py-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono text-neutral-400">Right:</span>
+                    <select @change="updatePanel(1, $event.target.value)" 
+                        class="bg-transparent border border-neutral-200 dark:border-neutral-600 px-2 py-1 text-xs font-semibold focus:outline-none appearance-none cursor-pointer"
+                        :value="splitOutput?.model">
+                        <template x-for="out in currentPrompt?.outputs" :key="out.model">
+                            <option :value="out.model" x-text="out.model"></option>
+                        </template>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2">
+                     <div class="w-12 h-0.5 bg-neutral-200 dark:bg-neutral-700 overflow-hidden">
+                        <div class="h-full" :class="getScoreColor(splitOutput?.score)" :style="`width: ${(splitOutput?.score || 0) * 10}%`"></div>
+                    </div>
+                    <span class="font-mono text-xs font-bold tabular-nums" :class="getScoreTextColor(splitOutput?.score)" x-text="splitOutput?.score?.toFixed(1)"></span>
+                    
+                    <!-- Global Actions moved to right panel in split -->
+                     <button @click="toggleSplitView()" class="ml-2 w-7 h-7 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors" title="Close Split">
+                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                    <button @click="closeViewer()" class="w-7 h-7 flex items-center justify-center border border-neutral-200 dark:border-neutral-600 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 transition-colors" title="Close All">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Viewer Content -->
-    <div class="pt-16 h-full overflow-auto">
-      <div class="min-h-full bg-stone-50 dark:bg-neutral-900">
-        <template x-if="viewerMode === 'catalog'">
-          <iframe x-show="currentOutput?.file?.endsWith('.html')" :src="getOutputPath(currentOutput?.file)"
-            class="w-full border-0" style="height: calc(100vh - 4rem);"></iframe>
-        </template>
+    <div class="flex-1 flex overflow-hidden">
+        
+        <!-- Main Panel -->
+        <div class="flex-1 h-full overflow-auto bg-white dark:bg-neutral-850" :class="viewerSplitMode ? 'border-r border-neutral-200 dark:border-neutral-700' : ''">
+            <template x-if="currentOutput?.file?.endsWith('.html') && !viewerShowCode">
+                <iframe :src="getOutputPath(currentOutput?.file)" class="w-full h-full border-0 bg-white"></iframe>
+            </template>
 
-        <template x-if="viewerMode === 'playground'">
-          <iframe :srcdoc="playgroundCode" class="w-full border-0" style="height: calc(100vh - 4rem);"></iframe>
-        </template>
+            <template x-if="currentOutput?.file?.endsWith('.html') && viewerShowCode">
+                <div class="h-full overflow-auto p-4 bg-neutral-50 dark:bg-neutral-900">
+                    <pre class="font-mono text-xs text-neutral-800 dark:text-stone-100 whitespace-pre-wrap leading-relaxed"><code x-text="viewerCodeContent"></code></pre>
+                </div>
+            </template>
 
-        <div
-          x-show="viewerMode === 'catalog' && (currentOutput?.file?.endsWith('.md') || currentOutput?.file?.endsWith('.txt'))"
-          class="p-6 sm:p-12 max-w-4xl mx-auto prose dark:prose-invert prose-sm">
-          <div x-html="markdownContent"></div>
+            <div x-show="currentOutput?.file?.endsWith('.md') || currentOutput?.file?.endsWith('.txt')" class="p-8 max-w-4xl mx-auto prose dark:prose-invert">
+                <div x-html="markdownContent"></div>
+            </div>
         </div>
-      </div>
+
+        <!-- Split Panel -->
+        <div x-show="viewerSplitMode" x-cloak class="flex-1 h-full overflow-auto bg-white dark:bg-neutral-850">
+            <template x-if="splitOutput">
+                <div class="h-full">
+                    <iframe x-show="splitOutput.file.endsWith('.html')" :src="getOutputPath(splitOutput.file)" class="w-full h-full border-0 bg-white"></iframe>
+                    
+                    <div x-show="splitOutput.file.endsWith('.md') || splitOutput.file.endsWith('.txt')" class="p-8 prose dark:prose-invert max-w-4xl mx-auto">
+                        <div x-html="splitContent"></div>
+                    </div>
+                </div>
+            </template>
+            <template x-if="!splitOutput">
+                 <div class="h-full flex items-center justify-center text-neutral-400 font-mono text-sm bg-white dark:bg-neutral-900">
+                     Select a model for the right panel
+                 </div>
+            </template>
+        </div>
     </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div x-show="toast.show" x-cloak
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-2"
+    class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[60] px-6 py-3 border border-neutral-900 dark:border-stone-100 bg-neutral-900 dark:bg-stone-100 text-stone-100 dark:text-neutral-900 font-mono text-xs uppercase tracking-wider shadow-lg">
+    <span x-text="toast.message"></span>
   </div>
 
   <script src="app.js"></script>

@@ -1,4 +1,4 @@
-/* Selection */
+/* Base & Selection */
 ::selection {
     background-color: #1c1917;
     color: #fafaf9;
@@ -20,14 +20,14 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #a8a29e;
+    background: #d6d3d1; /* stone-300 */
 }
 
 .dark ::-webkit-scrollbar-thumb {
-    background: #525252;
+    background: #525252; /* neutral-600 */
 }
 
-/* Line Clamp */
+/* Utilities */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -41,7 +41,6 @@
         opacity: 0;
         transform: translateY(16px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -55,34 +54,12 @@
     opacity: 0;
 }
 
-/* Typewriter Cursor */
-.typewriter-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1.1em;
-    background-color: #22c55e;
-    margin-left: 2px;
-    animation: blink 1s step-end infinite;
-    vertical-align: text-bottom;
-}
-
-@keyframes blink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0;
-    }
-}
-
 /* Focus States */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
-textarea:focus-visible {
+textarea:focus-visible,
+select:focus-visible {
     outline: 2px solid #1c1917;
     outline-offset: 2px;
 }
@@ -90,7 +67,8 @@ textarea:focus-visible {
 .dark button:focus-visible,
 .dark a:focus-visible,
 .dark input:focus-visible,
-.dark textarea:focus-visible {
+.dark textarea:focus-visible,
+.dark select:focus-visible {
     outline-color: #fafaf9;
 }
 
@@ -124,34 +102,33 @@ textarea:focus-visible {
 
 .prose code {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8em;
+    font-size: 0.85em;
 }
 
-/* Footer */
-footer {
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+/* Form Elements */
+select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
 }
 
-footer:hover {
-    opacity: 1;
+/* Smooth transitions for theme */
+body, .prompt-card, .model-card, .leaderboard-row, article, header, footer, main, div {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
 }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-
     .prompt-card,
     .model-card,
     .leaderboard-row {
         animation: none;
         opacity: 1;
     }
-
-    .typewriter-cursor {
-        animation: none;
-        opacity: 1;
-    }
-
     * {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
