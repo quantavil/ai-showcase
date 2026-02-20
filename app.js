@@ -13,10 +13,10 @@ function app() {
     showModelCards: false,
     markdownContent: '',
     typewriterInterval: null,
-    
+    viewerMode: 'catalog', // 'catalog' or 'playground'
+
     // Playground State
     playgroundCode: '<div class="p-8 text-center">\n  <h1 class="text-2xl font-bold text-gray-800">Hello World</h1>\n  <p class="text-gray-600">Start editing to see the preview.</p>\n</div>',
-    previewFull: false,
 
     // Computed
     get filteredPrompts() {
@@ -106,8 +106,8 @@ function app() {
         if (prompt) {
           this.loadPromptState(prompt);
         } else {
-            this.viewerOpen = false;
-            this.view = 'home';
+          this.viewerOpen = false;
+          this.view = 'home';
         }
       } else {
         this.viewerOpen = false;
@@ -149,8 +149,8 @@ function app() {
       cursor.className = 'typewriter-cursor';
 
       let index = 0;
-      // Fast speed (5ms per char) but visually pleasing
-      const speed = 5; 
+      //fast speed (2ms per char)
+      const speed = 2;
 
       this.typewriterInterval = setInterval(() => {
         if (index < text.length) {
@@ -169,6 +169,7 @@ function app() {
     },
 
     openViewer(output, index) {
+      this.viewerMode = 'catalog';
       this.currentOutput = output;
       this.viewerIndex = index;
       this.viewerOpen = true;
@@ -180,12 +181,18 @@ function app() {
       }
     },
 
+    openPlaygroundPreview() {
+      this.viewerMode = 'playground';
+      this.viewerOpen = true;
+      // No index or currentOutput needed for playground
+    },
+
     closeViewer() {
       this.viewerOpen = false;
     },
 
     navigateViewer(direction) {
-      if (!this.currentPrompt) return;
+      if (!this.currentPrompt || this.viewerMode === 'playground') return;
 
       const newIndex = this.viewerIndex + direction;
       if (newIndex >= 0 && newIndex < this.currentPrompt.outputs.length) {
