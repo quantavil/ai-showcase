@@ -72,6 +72,19 @@
                     "score": 8.7
                 }
             ]
+        },
+        {
+            "id": "icici-pulse",
+            "title": "Strategic Banking Dashboard",
+            "category": "creative",
+            "prompt": "Create a functional dual-interface prototype for 'ICICI DigiPulse v2'. Include a Customer App with login, dashboard, and product offers (Credit Card, Loans), and an RM Dashboard that mirrors customer activity in real-time with CRM feedback logs. Focus on a premium mobile UI/UX.",
+            "outputs": [
+                {
+                    "model": "Claude Opus 4.6",
+                    "file": "index.html",
+                    "score": 9.7
+                }
+            ]
         }
     ]
 }

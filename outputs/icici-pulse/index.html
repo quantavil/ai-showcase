@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICICI DigiPulse v2 — Dual Customer Demo</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{padding:20px;background:linear-gradient(135deg,#e8eaf6,#e0e0e0);display:flex;justify-content:center;align-items:flex-start;gap:36px;font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+.phone-wrap{display:flex;flex-direction:column;align-items:center;}
+.phone-label{font-size:11px;font-weight:800;color:#555;margin-bottom:8px;letter-spacing:1.5px;text-transform:uppercase;}
+.phone{width:270px;height:540px;background:#fff;border-radius:28px;border:5px solid #1a1a1a;overflow:hidden;position:relative;flex-shrink:0;box-shadow:0 20px 60px rgba(0,0,0,.28);}
+.phone::before{content:"";width:70px;height:5px;background:#1a1a1a;position:absolute;top:0;left:50%;transform:translateX(-50%);border-radius:0 0 6px 6px;z-index:10;}
+.screen{position:absolute;top:0;left:0;width:100%;height:100%;background:#f5f6fa;opacity:0;pointer-events:none;transition:.28s ease;display:flex;flex-direction:column;overflow:hidden;}
+.screen.active{opacity:1;pointer-events:auto;}
+.sbar{height:22px;padding:5px 12px;font-size:9px;display:flex;justify-content:space-between;align-items:center;font-weight:600;}
+.scroll{overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;}
+.scroll::-webkit-scrollbar{display:none;}
+.card{background:#fff;padding:13px;border-radius:13px;margin-bottom:11px;box-shadow:0 1px 8px rgba(0,0,0,.06);}
+.btn-o{background:linear-gradient(145deg,#F37121,#c55000);padding:11px;border-radius:11px;color:#fff;font-size:10.5px;font-weight:800;text-align:center;cursor:pointer;letter-spacing:.3px;}
+.btn-o:active{opacity:.85;}
+.btn-d{background:linear-gradient(145deg,#1a237e,#283593);padding:11px;border-radius:11px;color:#fff;font-size:10.5px;font-weight:800;text-align:center;cursor:pointer;}
+.hdr{padding:11px 14px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+.hdr .bk{cursor:pointer;font-size:15px;}
+.hdr .tt{font-size:11.5px;font-weight:700;}
+.ogrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;}
+.otile{background:#fff;border:1.5px solid #f0f0f0;border-radius:13px;padding:14px 8px;text-align:center;cursor:pointer;transition:.18s;}
+.otile:hover{border-color:#F37121;box-shadow:0 3px 12px rgba(243,113,33,.12);}
+.otile .ic{font-size:26px;margin-bottom:5px;}
+.otile .nm{font-size:10px;font-weight:800;color:#333;}
+.otile .sb{font-size:7.5px;color:#F37121;font-weight:600;margin-top:2px;}
+.otile .tg{display:inline-block;background:#fff3e0;color:#e65100;font-size:6.5px;font-weight:700;padding:2px 7px;border-radius:9px;margin-top:5px;}
+.ibar{height:5px;background:#eee;border-radius:5px;margin:3px 0 7px;}
+.ifill{height:5px;border-radius:5px;transition:width .3s;}
+.inp{width:100%;padding:9px 11px;font-size:9.5px;border:1.5px solid #ddd;border-radius:9px;margin-bottom:10px;outline:none;transition:.2s;}
+.inp:focus{border-color:#F37121;}
+.err{color:#e53935;font-size:8px;text-align:center;margin-bottom:7px;display:none;}
+.ntb-lk{text-align:center;font-size:9.5px;color:#1a237e;cursor:pointer;margin-top:14px;font-weight:700;text-decoration:underline;}
+.jdot{width:7px;height:7px;border-radius:50%;background:#2ecc71;margin-top:2px;flex-shrink:0;}
+.alert-t{display:none;background:#ffeaea;border-left:4px solid #e53935;padding:9px;border-radius:7px;margin-bottom:11px;font-size:9px;animation:sIn .3s ease;}
+@keyframes sIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+.pbadge{display:inline-flex;align-items:center;gap:3px;background:#f5f5f5;padding:3px 8px;border-radius:7px;font-size:8px;margin:2px 3px 2px 0;}
+.pbadge.cl{background:#fff3e0;border:1px solid #ffb74d;}
+.rm-fab{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);background:linear-gradient(145deg,#1a237e,#283593);padding:7px 14px;border-radius:18px;color:#fff;font-size:7.5px;font-weight:800;cursor:pointer;white-space:nowrap;z-index:5;box-shadow:0 3px 10px rgba(26,35,126,.3);}
+select.inp{padding:8px 10px;}
+textarea.inp{resize:none;}
+input[type=range]{width:100%;margin:2px 0 0;accent-color:#F37121;}
+</style>
+</head>
+<body>
+
+<!-- =============== CUSTOMER PHONE =============== -->
+<div class="phone-wrap">
+<div class="phone-label">📱 Customer App</div>
+<div class="phone" id="CP">
+
+<!-- LOGIN -->
+<div class="screen active" id="c_login">
+<div class="sbar" style="background:#F37121;color:#fff"><span>9:41</span><span>📶 🔋</span></div>
+<div style="background:linear-gradient(180deg,#F37121,#d35400);padding:22px 16px;color:#fff;">
+<div style="display:flex;gap:9px;align-items:center;margin-bottom:14px;">
+<div style="width:36px;height:36px;background:#fff;color:#F37121;display:flex;align-items:center;justify-content:center;border-radius:9px;font-weight:900;font-size:14px;">iB</div>
+<div><div style="font-size:15px;font-weight:800;">ICICI Bank</div><div style="font-size:8px;opacity:.85;">DigiPulse v2</div></div>
+</div>
+<div style="font-size:18px;font-weight:800;">Welcome Back 👋</div>
+<div style="font-size:10px;opacity:.9;margin-top:3px;">Sign in to your account</div>
+</div>
+<div class="scroll" style="padding:16px;background:#fff;">
+<div style="font-size:9px;font-weight:700;margin-bottom:3px;color:#333;">Mobile Number</div>
+<input type="text" id="lg_mob" class="inp" placeholder="Enter mobile number" maxlength="11">
+<div style="font-size:9px;font-weight:700;margin-bottom:3px;color:#333;">MPIN</div>
+<input type="password" id="lg_pin" class="inp" placeholder="Enter 4-digit MPIN" maxlength="4">
+<div id="lg_err" class="err">❌ Invalid credentials. Please try again.</div>
+<div class="btn-o" onclick="handleLogin()">LOGIN →</div>
+<div class="ntb-lk" onclick="goNTB()">New to ICICI? Let's explore →</div>
+<div style="margin-top:18px;background:#f9f9f9;border-radius:10px;padding:10px;font-size:8px;color:#888;text-align:center;">
+<b>Demo Credentials</b><br>
+Rahul: 12345678910 / 1234<br>
+Anjali: 10987654321 / 1234
+</div>
+</div>
+</div>
+
+<!-- NTB HOME -->
+<div class="screen" id="c_ntb">
+<div class="sbar"><span>9:41</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#F37121;"><div class="bk" onclick="S('CP','c_login')">←</div><div class="tt">Explore ICICI Bank</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:13px;">
+<div style="font-size:12px;font-weight:800;margin-bottom:3px;">👋 Welcome, Explorer!</div>
+<div style="font-size:8px;color:#888;margin-bottom:13px;">Discover products & services. Open an account anytime.</div>
+<div class="ogrid">
+<div class="otile" onclick="ntbProd('upi')"><div class="ic">📲</div><div class="nm">UPI Payments</div><div class="sb">Send & Receive</div></div>
+<div class="otile" onclick="ntbProd('cc')"><div class="ic">💳</div><div class="nm">Credit Cards</div><div class="sb">Explore Cards</div></div>
+<div class="otile" onclick="ntbProd('sa')"><div class="ic">🏦</div><div class="nm">Savings Account</div><div class="sb">Zero Balance</div></div>
+<div class="otile" onclick="ntbProd('pl')"><div class="ic">💰</div><div class="nm">Personal Loans</div><div class="sb">Quick Approval</div></div>
+</div>
+<div class="card" style="margin-top:13px;text-align:center;">
+<div style="font-size:9px;font-weight:700;color:#1a237e;">Ready to join ICICI Bank?</div>
+<div style="font-size:7px;color:#999;margin-top:3px;">Open a savings account in minutes</div>
+<div class="btn-o" style="margin-top:8px;" onclick="alert('Account opening flow coming soon!')">OPEN ACCOUNT →</div>
+</div>
+</div>
+</div>
+
+<!-- NTB DETAIL -->
+<div class="screen" id="c_ntb_d">
+<div class="sbar"><span>9:42</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#F37121;"><div class="bk" onclick="S('CP','c_ntb')">←</div><div class="tt" id="ntb_tt">Product</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:13px;" id="ntb_body"></div>
+</div>
+
+<!-- ETB DASHBOARD -->
+<div class="screen" id="c_dash">
+<div class="sbar" style="background:#F37121;color:#fff"><span>9:42</span><span>📶 🔋</span></div>
+<div style="background:linear-gradient(180deg,#F37121,#c55000);padding:13px 14px 16px;color:#fff;">
+<div style="display:flex;justify-content:space-between;align-items:center;">
+<div><div id="d_greet" style="font-size:13px;font-weight:800;"></div><div id="d_cat" style="font-size:8px;opacity:.85;margin-top:2px;"></div></div>
+<div style="width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;" onclick="handleLogout()">👤</div>
+</div>
+<div style="margin-top:10px;" id="d_exist"></div>
+</div>
+<div class="scroll" style="padding:13px;">
+<div style="font-size:11px;font-weight:800;margin-bottom:9px;color:#333;">✨ Pre-approved Offers for You</div>
+<div class="ogrid" id="d_offers"></div>
+<div class="card" style="margin-top:12px;cursor:pointer;" onclick="S('CP','c_svc')">
+<div style="display:flex;align-items:center;gap:9px;"><div style="font-size:22px;">🧾</div><div><div style="font-size:10px;font-weight:800;">Service Requests</div><div style="font-size:7px;color:#888;">Nominee, KYC & more</div></div></div>
+</div>
+</div>
+<div class="rm-fab" onclick="S('CP','c_rm')">📞 Contact your Relationship Manager</div>
+</div>
+
+<!-- CREDIT CARD -->
+<div class="screen" id="c_cc">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#e65100;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Credit Card</div><div style="width:18px"></div></div>
+<div class="scroll">
+<div style="background:linear-gradient(145deg,#e65100,#bf360c);padding:18px;color:#fff;">
+<div style="display:inline-block;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:12px;font-size:7px;font-weight:700;">✦ Pre-Approved</div>
+<div style="font-size:20px;font-weight:800;margin-top:7px;">💳 Titanium Card</div>
+<div style="font-size:9px;opacity:.9;margin-top:3px;">Premium rewards · Instant activation</div>
+</div>
+<div style="padding:13px;">
+<div class="card">
+<div style="display:flex;justify-content:space-around;text-align:center;">
+<div><div style="font-size:16px;font-weight:800;color:#F37121;">₹5L</div><div style="font-size:7px;color:#999;">Credit Limit</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#F37121;">₹0</div><div style="font-size:7px;color:#999;">Joining Fee</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#F37121;">4x</div><div style="font-size:7px;color:#999;">Lounge/yr</div></div>
+</div>
+</div>
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:6px;">Card Benefits</div>
+<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">
+<li>Lifetime Free — No annual charges</li>
+<li>5% Cashback on online spends</li>
+<li>Airport Lounge Access (4/year)</li>
+<li>Fuel Surcharge Waiver</li>
+<li>1% reward points on all spends</li>
+<li>Easy EMI conversion</li>
+</ul>
+</div>
+<div class="btn-o" onclick="submitApp('Credit Card')">ACTIVATE NOW →</div>
+</div>
+</div>
+</div>
+
+<!-- PERSONAL LOAN -->
+<div class="screen" id="c_pl">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#c62828;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Personal Loan</div><div style="width:18px"></div></div>
+<div class="scroll">
+<div style="background:linear-gradient(145deg,#c62828,#b71c1c);padding:18px;color:#fff;">
+<div style="display:inline-block;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:12px;font-size:7px;font-weight:700;">✦ Pre-Approved</div>
+<div style="font-size:20px;font-weight:800;margin-top:7px;">💰 Personal Loan</div>
+<div style="font-size:9px;opacity:.9;margin-top:3px;">Quick funds · Instant approval · Minimal docs</div>
+</div>
+<div style="padding:13px;">
+<div class="card">
+<div style="display:flex;justify-content:space-around;text-align:center;">
+<div><div style="font-size:16px;font-weight:800;color:#c62828;">₹25L</div><div style="font-size:7px;color:#999;">Max Amount</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#c62828;">10.5%</div><div style="font-size:7px;color:#999;">Interest</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#c62828;">60</div><div style="font-size:7px;color:#999;">Months</div></div>
+</div>
+</div>
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:9px;">🧮 EMI Calculator</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Loan Amount</span><span id="pla_l" style="color:#c62828;font-weight:700;">₹5,00,000</span></div>
+<input type="range" id="pla" min="50000" max="2500000" value="500000" oninput="plLbl();recI('Personal Loan',2)">
+</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Interest Rate</span><span id="plr_l" style="color:#c62828;font-weight:700;">10.5%</span></div>
+<input type="range" id="plr" min="8" max="18" step=".1" value="10.5" oninput="plLbl();recI('Personal Loan',2)">
+</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Tenure</span><span id="plt_l" style="color:#c62828;font-weight:700;">36 Months</span></div>
+<input type="range" id="plt" min="6" max="60" value="36" oninput="plLbl();recI('Personal Loan',2)">
+</div>
+<div style="padding:10px;background:#fef0f0;border:1px solid #ef9a9a;border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+<div><div style="font-size:8px;color:#666;">Monthly EMI</div><div style="font-size:6px;color:#bbb;">Click calculate</div></div>
+<div id="pl_emi" style="font-size:16px;font-weight:800;color:#c62828;">₹0</div>
+</div>
+<div class="btn-o" style="margin-top:9px;background:linear-gradient(145deg,#c62828,#b71c1c);" onclick="calcPL()">CALCULATE EMI →</div>
+</div>
+<div class="btn-o" onclick="submitApp('Personal Loan')">APPLY NOW →</div>
+</div>
+</div>
+</div>
+
+<!-- AUTO LOAN -->
+<div class="screen" id="c_auto">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#2e7d32;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt" id="ah_tt">Auto Loan</div><div style="width:18px"></div></div>
+<div class="scroll">
+<div id="ah_hero" style="background:linear-gradient(145deg,#2e7d32,#1b5e20);padding:18px;color:#fff;">
+<div style="display:inline-block;background:rgba(255,255,255,.2);padding:3px 10px;border-radius:12px;font-size:7px;font-weight:700;">✦ Pre-Approved</div>
+<div id="ah_title" style="font-size:20px;font-weight:800;margin-top:7px;">🚗 Auto Loan</div>
+<div id="ah_desc" style="font-size:9px;opacity:.9;margin-top:3px;"></div>
+</div>
+<div style="padding:13px;">
+<div class="card">
+<div style="display:flex;justify-content:space-around;text-align:center;">
+<div><div id="ah_max" style="font-size:16px;font-weight:800;color:#2e7d32;"></div><div style="font-size:7px;color:#999;">Max Loan</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#2e7d32;">8.5%</div><div style="font-size:7px;color:#999;">Interest</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#2e7d32;">84</div><div style="font-size:7px;color:#999;">Months</div></div>
+</div>
+</div>
+<div class="card" id="ah_feat"></div>
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:9px;">🧮 EMI Calculator</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Loan Amount</span><span id="ala_l" style="color:#2e7d32;font-weight:700;">₹15,00,000</span></div>
+<input type="range" id="ala" min="100000" max="7000000" value="1500000" oninput="alLbl();recAutoI()">
+</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Interest Rate</span><span id="alr_l" style="color:#2e7d32;font-weight:700;">8.5%</span></div>
+<input type="range" id="alr" min="7" max="14" step=".1" value="8.5" oninput="alLbl();recAutoI()">
+</div>
+<div style="margin-bottom:8px;">
+<div style="display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;"><span>Tenure</span><span id="alt_l" style="color:#2e7d32;font-weight:700;">60 Months</span></div>
+<input type="range" id="alt" min="12" max="84" value="60" oninput="alLbl();recAutoI()">
+</div>
+<div style="padding:10px;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:10px;display:flex;justify-content:space-between;align-items:center;">
+<div><div style="font-size:8px;color:#666;">Monthly EMI</div><div style="font-size:6px;color:#bbb;">Click calculate</div></div>
+<div id="al_emi" style="font-size:16px;font-weight:800;color:#2e7d32;">₹0</div>
+</div>
+<div class="btn-o" style="margin-top:9px;background:linear-gradient(145deg,#2e7d32,#1b5e20);" onclick="calcAL()">CALCULATE EMI →</div>
+</div>
+<div class="btn-o" onclick="submitAutoApp()">APPLY NOW →</div>
+</div>
+</div>
+</div>
+
+<!-- SAVINGS ACCOUNT -->
+<div class="screen" id="c_sa">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#1565c0;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Savings Account</div><div style="width:18px"></div></div>
+<div class="scroll">
+<div style="background:linear-gradient(145deg,#1565c0,#0d47a1);padding:18px;color:#fff;">
+<div style="font-size:20px;font-weight:800;">🏦 Savings Account</div>
+<div style="font-size:9px;opacity:.9;margin-top:3px;">Smart savings with premium benefits</div>
+</div>
+<div style="padding:13px;">
+<div class="card">
+<div style="display:flex;justify-content:space-around;text-align:center;">
+<div><div style="font-size:16px;font-weight:800;color:#1565c0;">4%</div><div style="font-size:7px;color:#999;">Interest</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#1565c0;">₹0</div><div style="font-size:7px;color:#999;">Min Balance</div></div>
+<div><div style="font-size:16px;font-weight:800;color:#1565c0;">∞</div><div style="font-size:7px;color:#999;">Free ATM</div></div>
+</div>
+</div>
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:6px;">Account Benefits</div>
+<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">
+<li>Zero Balance Facility</li>
+<li>Free unlimited ATM withdrawals</li>
+<li>Cashback on debit card transactions</li>
+<li>Quarterly airport lounge access</li>
+<li>WhatsApp Banking</li>
+<li>Priority customer service</li>
+<li>Higher interest on balances above ₹1L</li>
+</ul>
+</div>
+<div class="btn-o" onclick="submitApp('Savings Account')">REQUEST CALLBACK →</div>
+</div>
+</div>
+</div>
+
+<!-- SALARY ACCOUNT UPGRADE -->
+<div class="screen" id="c_sal">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#6a1b9a;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Salary Upgrade</div><div style="width:18px"></div></div>
+<div class="scroll">
+<div style="background:linear-gradient(145deg,#6a1b9a,#4a148c);padding:18px;color:#fff;">
+<div style="font-size:20px;font-weight:800;">💼 Salary Account Upgrade</div>
+<div style="font-size:9px;opacity:.9;margin-top:3px;">Unlock premium banking privileges</div>
+</div>
+<div style="padding:13px;">
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:6px;">Why Upgrade?</div>
+<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">
+<li>Zero Balance requirement</li>
+<li>Premium Debit Card — free for life</li>
+<li>₹25L Personal Accident Cover</li>
+<li>Pre-approved Credit Card</li>
+<li>Corporate partner offers & discounts</li>
+<li>Priority banking at branches</li>
+</ul>
+</div>
+<div class="btn-o" onclick="submitApp('Salary Upgrade')">UPGRADE NOW →</div>
+</div>
+</div>
+</div>
+
+<!-- SERVICE REQUEST -->
+<div class="screen" id="c_svc">
+<div class="sbar"><span>9:43</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#F37121;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Service Requests</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:13px;">
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:6px;">Add Nominee for FD</div>
+<select id="fd_sel" class="inp" onchange="document.getElementById('nom_f').style.display=this.value?'block':'none'">
+<option value="">Choose FD</option>
+<option>FD #1 — ₹2,00,000 — 12 Months</option>
+<option>FD #2 — ₹5,00,000 — 24 Months</option>
+</select>
+</div>
+<div class="card" id="nom_f" style="display:none;">
+<div style="font-size:9px;font-weight:800;margin-bottom:6px;">Nominee Details</div>
+<input type="text" placeholder="Nominee Name" class="inp">
+<select class="inp"><option>Spouse</option><option>Child</option><option>Parent</option><option>Sibling</option></select>
+<div class="btn-o" onclick="submitApp('Service Request')">SUBMIT NOMINEE →</div>
+</div>
+</div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div class="screen" id="c_app">
+<div class="sbar"><span>9:44</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#F37121;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt" id="ap_tt">Apply</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:13px;">
+<div class="card">
+<div style="font-size:7px;color:#999;margin-bottom:2px;">Full Name</div>
+<div id="ap_nm" style="background:#fffaf7;border:1.5px solid #F37121;padding:7px 10px;margin-bottom:10px;border-radius:9px;font-size:9px;font-weight:600;"></div>
+<div style="font-size:7px;color:#999;margin-bottom:2px;">PAN</div>
+<div style="background:#fafafa;border:1.5px solid #ddd;padding:7px 10px;margin-bottom:10px;border-radius:9px;font-size:9px;">ABCPS1234K</div>
+<div style="font-size:7px;color:#999;margin-bottom:2px;">Mobile</div>
+<div id="ap_mob" style="background:#fafafa;border:1.5px solid #ddd;padding:7px 10px;border-radius:9px;font-size:9px;"></div>
+</div>
+<div class="btn-o" onclick="finalSubmit()">SUBMIT APPLICATION →</div>
+</div>
+</div>
+
+<!-- SUCCESS -->
+<div class="screen" id="c_ok">
+<div class="sbar"><span>9:44</span><span>📶 🔋</span></div>
+<div class="scroll" style="padding:36px 13px;text-align:center;">
+<div style="width:70px;height:70px;background:#d4f8d4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:36px;color:#2e7d32;">✓</div>
+<div style="font-size:15px;font-weight:800;margin-top:16px;color:#333;">Application Submitted!</div>
+<div style="font-size:9px;color:#999;margin-top:3px;">Reference Number:</div>
+<div id="ref_no" style="font-size:13px;font-weight:800;color:#F37121;margin-top:3px;"></div>
+<div class="btn-o" style="margin-top:22px;" onclick="S('CP','c_dash')">BACK TO HOME →</div>
+</div>
+</div>
+
+<!-- RM CONNECT -->
+<div class="screen" id="c_rm">
+<div class="sbar"><span>9:45</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:#F37121;"><div class="bk" onclick="S('CP','c_dash')">←</div><div class="tt">Contact RM</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:18px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+<div style="font-size:44px;margin-bottom:14px;">📞</div>
+<div style="font-size:13px;font-weight:800;margin-bottom:7px;">Connecting to your RM…</div>
+<div style="font-size:9px;color:#666;margin-bottom:18px;">Your RM <b>Priya Mehta</b> will connect shortly.</div>
+<div class="btn-o" style="width:150px;" onclick="S('CP','c_dash')">Cancel</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- =============== RM PHONE =============== -->
+<div class="phone-wrap">
+<div class="phone-label">🏢 RM Dashboard</div>
+<div class="phone" id="RP">
+
+<!-- RM DASHBOARD -->
+<div class="screen active" id="r_dash">
+<div class="sbar" style="background:#1a237e;color:#fff"><span>9:41</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:linear-gradient(145deg,#1a237e,#283593);"><div class="tt">RM Dashboard</div><div style="font-size:8px;opacity:.8;">Priya Mehta</div></div>
+<div class="scroll" style="padding:13px;">
+
+<div id="rm_alert" class="alert-t">🔔 <b>HIGH INTENT!</b> Customer intent crossed 60% on <b id="rm_ap"></b></div>
+
+<div id="rm_wait" class="card" style="text-align:center;padding:28px;">
+<div style="font-size:28px;margin-bottom:8px;">⏳</div>
+<div style="font-size:11px;font-weight:700;color:#555;">Waiting for customer login…</div>
+<div style="font-size:8px;color:#bbb;margin-top:3px;">Dashboard activates when a customer logs in.</div>
+</div>
+
+<div id="rm_act" style="display:none;">
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">👤 Customer Profile</div>
+<div id="rm_info" style="font-size:9px;line-height:1.55;"></div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">📦 Existing Products</div>
+<div id="rm_prod" style="font-size:9px;"></div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">🔍 Lifestyle Signals</div>
+<div id="rm_life" style="font-size:9px;line-height:1.5;"></div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">📊 Digital Intent</div>
+<div id="rm_int" style="font-size:9px;">No activity yet.</div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">🎯 Next Best Offer</div>
+<div id="rm_nbo" style="font-size:11px;font-weight:700;color:#F37121;">—</div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">🗺️ Customer Journey</div>
+<div id="rm_jrn" style="font-size:9px;line-height:1.5;">No journey yet.</div>
+</div>
+
+<div class="card">
+<div style="font-size:11px;font-weight:800;margin-bottom:5px;">🤖 AI Calling Script</div>
+<div id="rm_scr" style="font-size:9px;line-height:1.5;color:#444;">Waiting for customer activity...</div>
+</div>
+
+<div class="card" style="cursor:pointer;" onclick="S('RP','r_fb')">
+<div style="font-size:11px;font-weight:800;margin-bottom:3px;">📝 RM Feedback & Insights</div>
+<div style="font-size:8px;color:#666;">Log discussion insights → Push to CRM</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- RM FEEDBACK -->
+<div class="screen" id="r_fb">
+<div class="sbar" style="background:#1a237e;color:#fff"><span>9:41</span><span>📶 🔋</span></div>
+<div class="hdr" style="background:linear-gradient(145deg,#1a237e,#283593);"><div class="bk" onclick="S('RP','r_dash')">←</div><div class="tt">RM Feedback & Insights</div><div style="width:18px"></div></div>
+<div class="scroll" style="padding:13px;">
+<div class="card">
+<div style="font-size:10px;font-weight:800;margin-bottom:7px;">Feedback Type</div>
+<select id="fb_t" class="inp" onchange="togFB()"><option value="">Choose</option><option value="Sales">Sales Comment</option><option value="Service">Service Comment</option></select>
+<div id="fb_sb" style="display:none;">
+<div style="font-size:9px;font-weight:700;margin-bottom:3px;">Sales Category</div>
+<select id="fb_sc" class="inp"><option value="">Choose</option><option>Customer not interested</option><option>Customer to revert</option><option>Customer will visit branch</option><option>Customer to connect later</option><option>Customer unreachable</option><option>Follow up with Branch Head</option><option>Lead converted</option><option>Others</option></select>
+</div>
+<div id="fb_svb" style="display:none;">
+<div style="font-size:9px;font-weight:700;margin-bottom:3px;">Service Category</div>
+<select id="fb_svc" class="inp"><option value="">Choose</option><option>Customer irate, wanting to exit</option><option>Customer wants to escalate</option><option>Needs further intervention</option><option>Issue resolved</option><option>Customer unreachable</option></select>
+</div>
+<div style="font-size:10px;font-weight:800;margin-bottom:4px;">Key Takeaways</div>
+<textarea id="fb_n" class="inp" placeholder="Enter discussion summary..." style="height:75px;"></textarea>
+<div class="btn-d" onclick="pushCRM()">PUSH TO CRM →</div>
+</div>
+<div id="crm_ok" style="display:none;background:#d4f8d4;border-left:4px solid #2e7d32;padding:9px;border-radius:7px;font-size:9px;margin-top:9px;">✅ Feedback successfully pushed to CRM</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ============================== JAVASCRIPT ============================== -->
+<script>
+
+// ==================== CUSTOMER DATA ====================
+const CUST = {
+  "12345678910": {
+    id: "rahul",
+    name: "Rahul Sharma",
+    mobile: "12345678910",
+    mpin: "1234",
+    age: 40,
+    cat: "Elite",
+    prods: [
+      { name: "Auto Loan", detail: "₹15L · 5 yrs ago · Closing in 4 months", st: "closing" },
+      { name: "Home Loan", detail: "Active · Recent", st: "active" }
+    ],
+    life: [
+      "📈 Increasing monthly salary year on year",
+      "🏠 Recently purchased new house",
+      "📍 Moved from suburb to upscale neighbourhood"
+    ],
+    offers: [
+      { id: "credit_card", icon: "💳", title: "Credit Card", sub: "Titanium · Pre-Approved", scr: "c_cc" },
+      { id: "savings", icon: "🏦", title: "Savings Account", sub: "Premium Benefits", scr: "c_sa" },
+      { id: "salary", icon: "💼", title: "Salary Upgrade", sub: "Priority Banking", scr: "c_sal" },
+      { id: "auto_loan", icon: "🚗", title: "Auto Loan Upgrade", sub: "Up to ₹70L · Premium", scr: "c_auto" }
+    ],
+    auto: {
+      max: 7000000,
+      lbl: "₹70L",
+      title: "🚗 Premium Auto Loan Upgrade",
+      desc: "Upgrade to a premium vehicle — Elite exclusive rates & 100% on-road funding.",
+      feat: [
+        "Premium vehicle financing up to ₹70 Lakhs",
+        "Lowest rates for Elite customers",
+        "100% on-road funding available",
+        "Doorstep document pickup",
+        "Current auto loan closes in 4 months — perfect timing!"
+      ]
+    },
+    pending: ["FD Nominee not added"]
+  },
+  "10987654321": {
+    id: "anjali",
+    name: "Anjali Verma",
+    mobile: "10987654321",
+    mpin: "1234",
+    age: 40,
+    cat: "Preferred",
+    prods: [
+      { name: "Credit Card", detail: "Active", st: "active" },
+      { name: "Auto Loan", detail: "₹15L · 5 yrs ago · Closing in 3 months", st: "closing" }
+    ],
+    life: [
+      "📊 Inconsistent income pattern over last 5 years",
+      "📉 Limited growth in salary deposits",
+      "🏠 No recent major asset purchases"
+    ],
+    offers: [
+      { id: "credit_card", icon: "💳", title: "Credit Card", sub: "Upgrade Available", scr: "c_cc" },
+      { id: "personal_loan", icon: "💰", title: "Personal Loan", sub: "Pre-Approved · Quick", scr: "c_pl" },
+      { id: "auto_loan", icon: "🚗", title: "Auto Loan", sub: "Up to ₹15L", scr: "c_auto" },
+      { id: "savings", icon: "🏦", title: "Savings Account", sub: "Smart Savings", scr: "c_sa" }
+    ],
+    auto: {
+      max: 1500000,
+      lbl: "₹15L",
+      title: "🚗 Auto Loan",
+      desc: "Affordable vehicle financing with flexible EMI options.",
+      feat: [
+        "Vehicle financing up to ₹15 Lakhs",
+        "Competitive interest rates",
+        "Flexible tenure up to 84 months",
+        "Quick approval process",
+        "Minimal documentation required"
+      ]
+    },
+    pending: ["FD Nominee not added"]
+  }
+};
+
+// ==================== STATE ====================
+let cur = null;           // current customer data
+let intent = {};          // { productTitle: intentValue }
+let highShown = {};       // track if 60% alert was shown
+let journey = [];         // [{product, desc, time}]
+let lastPLAmt = 500000;
+let lastPLTen = 36;
+let lastALAmt = 1500000;
+let lastALTen = 60;
+let pendingProduct = "";  // for application form
+let crmStore = [];
+
+// ==================== SCREEN SWITCH ====================
+function S(phone, scr) {
+  document.querySelectorAll('#' + phone + ' .screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(scr).classList.add('active');
+}
+
+// ==================== LOGIN ====================
+function handleLogin() {
+  const mob = document.getElementById('lg_mob').value.trim();
+  const pin = document.getElementById('lg_pin').value.trim();
+  const errEl = document.getElementById('lg_err');
+
+  if (CUST[mob] && CUST[mob].mpin === pin) {
+    errEl.style.display = 'none';
+    initCustomer(CUST[mob]);
+  } else {
+    errEl.style.display = 'block';
+  }
+}
+
+function handleLogout() {
+  cur = null;
+  intent = {};
+  highShown = {};
+  journey = [];
+  document.getElementById('lg_mob').value = '';
+  document.getElementById('lg_pin').value = '';
+  document.getElementById('lg_err').style.display = 'none';
+  document.getElementById('rm_wait').style.display = 'block';
+  document.getElementById('rm_act').style.display = 'none';
+  document.getElementById('rm_alert').style.display = 'none';
+  S('CP', 'c_login');
+  S('RP', 'r_dash');
+}
+
+// ==================== INIT CUSTOMER ====================
+function initCustomer(c) {
+  cur = c;
+  intent = {};
+  highShown = {};
+  journey = [];
+
+  // Init intent keys from offers
+  c.offers.forEach(o => {
+    intent[o.title] = 0;
+    highShown[o.title] = false;
+  });
+
+  // Populate dashboard greeting
+  document.getElementById('d_greet').innerText = 'Hello, ' + c.name.split(' ')[0] + '! 👋';
+  document.getElementById('d_cat').innerText = c.cat + ' Customer · Age ' + c.age;
+
+  // Existing products badges
+  let ep = '';
+  c.prods.forEach(p => {
+    let cls = p.st === 'closing' ? 'pbadge cl' : 'pbadge';
+    let extra = p.st === 'closing' ? ' ⏰' : '';
+    ep += '<span class="' + cls + '">' + p.name + extra + '</span>';
+  });
+  document.getElementById('d_exist').innerHTML = ep;
+
+  // Offer tiles
+  let og = '';
+  c.offers.forEach(o => {
+    og += '<div class="otile" onclick="navProd(\'' + o.title + '\',\'' + o.scr + '\')">' +
+          '<div class="ic">' + o.icon + '</div>' +
+          '<div class="nm">' + o.title + '</div>' +
+          '<div class="sb">' + o.sub + '</div>' +
+          '<div class="tg">PRE-APPROVED</div></div>';
+  });
+  document.getElementById('d_offers').innerHTML = og;
+
+  // Setup auto loan page for this customer
+  setupAutoPage(c);
+
+  // Activate RM dashboard
+  activateRM(c);
+
+  // Show dashboard
+  S('CP', 'c_dash');
+}
+
+// ==================== SETUP AUTO LOAN PAGE ====================
+function setupAutoPage(c) {
+  document.getElementById('ah_tt').innerText = c.auto.title.replace(/🚗\s*/, '');
+  document.getElementById('ah_title').innerText = c.auto.title;
+  document.getElementById('ah_desc').innerText = c.auto.desc;
+  document.getElementById('ah_max').innerText = c.auto.lbl;
+
+  // Set slider max
+  document.getElementById('ala').max = c.auto.max;
+  document.getElementById('ala').value = Math.min(1500000, c.auto.max);
+  alLbl();
+
+  // Features
+  let fh = '<div style="font-size:10px;font-weight:800;margin-bottom:6px;">Key Features</div>' +
+            '<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">';
+  c.auto.feat.forEach(f => fh += '<li>' + f + '</li>');
+  fh += '</ul>';
+  document.getElementById('ah_feat').innerHTML = fh;
+}
+
+// ==================== ACTIVATE RM ====================
+function activateRM(c) {
+  document.getElementById('rm_wait').style.display = 'none';
+  document.getElementById('rm_act').style.display = 'block';
+
+  // Profile
+  document.getElementById('rm_info').innerHTML =
+    'Name: <b>' + c.name + '</b><br>' +
+    'Mobile: <b>' + c.mobile + '</b><br>' +
+    'Age: <b>' + c.age + '</b><br>' +
+    'Category: <b>' + c.cat + '</b>';
+
+  // Products
+  let ph = '';
+  c.prods.forEach(p => {
+    let col = p.st === 'closing' ? '#e65100' : '#2e7d32';
+    ph += '<div style="margin-bottom:4px;"><b>' + p.name + '</b> — ' +
+          '<span style="color:' + col + ';">' + p.detail + '</span></div>';
+  });
+  document.getElementById('rm_prod').innerHTML = ph;
+
+  // Lifestyle
+  let lh = '';
+  c.life.forEach(l => lh += '<div>' + l + '</div>');
+  document.getElementById('rm_life').innerHTML = lh;
+
+  // Reset panels
+  updateRMPanels();
+}
+
+// ==================== NTB FLOW ====================
+function goNTB() {
+  S('CP', 'c_ntb');
+}
+
+function ntbProd(type) {
+  const NTB = {
+    upi: {
+      title: 'UPI Payments',
+      body: '<div class="card"><div style="font-size:14px;font-weight:800;margin-bottom:6px;">📲 UPI Payments</div>' +
+            '<div style="font-size:9px;color:#555;line-height:1.5;">Send & receive money instantly using UPI. Link any bank account and start transacting.</div></div>' +
+            '<div class="card"><div style="font-size:10px;font-weight:800;margin-bottom:6px;">Quick Actions</div>' +
+            '<div class="ogrid">' +
+            '<div class="otile" onclick="alert(\'Demo: Scan & Pay\')"><div class="ic">📷</div><div class="nm">Scan & Pay</div></div>' +
+            '<div class="otile" onclick="alert(\'Demo: Send Money\')"><div class="ic">💸</div><div class="nm">Send Money</div></div>' +
+            '<div class="otile" onclick="alert(\'Demo: Request Money\')"><div class="ic">📥</div><div class="nm">Request</div></div>' +
+            '<div class="otile" onclick="alert(\'Demo: Check Balance\')"><div class="ic">💰</div><div class="nm">Balance</div></div>' +
+            '</div></div>' +
+            '<div class="card" style="text-align:center;"><div style="font-size:9px;color:#1a237e;font-weight:700;">Open a Savings Account to unlock full UPI features</div>' +
+            '<div class="btn-o" style="margin-top:8px;" onclick="alert(\'Account opening flow coming soon!\')">OPEN ACCOUNT →</div></div>'
+    },
+    cc: {
+      title: 'Credit Cards',
+      body: '<div class="card"><div style="font-size:14px;font-weight:800;margin-bottom:6px;">💳 ICICI Credit Cards</div>' +
+            '<div style="font-size:9px;color:#555;line-height:1.5;">Explore our range of credit cards with exciting rewards, cashback, and lifestyle benefits.</div></div>' +
+            '<div class="card"><div style="font-size:10px;font-weight:800;margin-bottom:6px;">Popular Cards</div>' +
+            '<div style="padding:8px;background:#fff3e0;border-radius:9px;margin-bottom:7px;"><div style="font-size:10px;font-weight:700;">Amazon Pay Card</div><div style="font-size:7px;color:#888;">5% cashback on Amazon · ₹500 joining</div></div>' +
+            '<div style="padding:8px;background:#e3f2fd;border-radius:9px;margin-bottom:7px;"><div style="font-size:10px;font-weight:700;">Coral Card</div><div style="font-size:7px;color:#888;">2 reward points/₹100 · Airport lounge</div></div>' +
+            '<div style="padding:8px;background:#fce4ec;border-radius:9px;"><div style="font-size:10px;font-weight:700;">Platinum Chip</div><div style="font-size:7px;color:#888;">Lifetime free · Fuel surcharge waiver</div></div></div>' +
+            '<div class="btn-o" onclick="alert(\'Please open account first to apply!\')">APPLY NOW →</div>'
+    },
+    sa: {
+      title: 'Savings Account',
+      body: '<div class="card"><div style="font-size:14px;font-weight:800;margin-bottom:6px;">🏦 Savings Account</div>' +
+            '<div style="font-size:9px;color:#555;line-height:1.5;">Open a savings account with zero balance and start earning interest from day one.</div></div>' +
+            '<div class="card"><div style="font-size:10px;font-weight:800;margin-bottom:6px;">Benefits</div>' +
+            '<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">' +
+            '<li>Zero Balance Account</li><li>Free ATM withdrawals nationwide</li>' +
+            '<li>4% interest per annum</li><li>Instant digital account opening</li>' +
+            '<li>WhatsApp Banking</li><li>Free debit card</li></ul></div>' +
+            '<div class="btn-o" onclick="alert(\'Account opening flow coming soon!\')">OPEN ACCOUNT →</div>'
+    },
+    pl: {
+      title: 'Personal Loans',
+      body: '<div class="card"><div style="font-size:14px;font-weight:800;margin-bottom:6px;">💰 Personal Loans</div>' +
+            '<div style="font-size:9px;color:#555;line-height:1.5;">Get instant personal loans with minimal documentation and competitive interest rates.</div></div>' +
+            '<div class="card"><div style="display:flex;justify-content:space-around;text-align:center;">' +
+            '<div><div style="font-size:15px;font-weight:800;color:#F37121;">₹25L</div><div style="font-size:7px;color:#999;">Max Loan</div></div>' +
+            '<div><div style="font-size:15px;font-weight:800;color:#F37121;">10.5%</div><div style="font-size:7px;color:#999;">Starting Rate</div></div>' +
+            '<div><div style="font-size:15px;font-weight:800;color:#F37121;">60</div><div style="font-size:7px;color:#999;">Max Months</div></div></div></div>' +
+            '<div class="card"><div style="font-size:10px;font-weight:800;margin-bottom:6px;">Features</div>' +
+            '<ul style="font-size:8px;color:#555;line-height:1.55;padding-left:14px;">' +
+            '<li>Instant approval in minutes</li><li>Minimal documentation</li>' +
+            '<li>Flexible tenure 6-60 months</li><li>No collateral required</li>' +
+            '<li>Disbursal within 24 hours</li></ul></div>' +
+            '<div class="btn-o" onclick="alert(\'Please open account first to apply!\')">CHECK ELIGIBILITY →</div>'
+    }
+  };
+
+  const p = NTB[type];
+  document.getElementById('ntb_tt').innerText = p.title;
+  document.getElementById('ntb_body').innerHTML = p.body;
+  S('CP', 'c_ntb_d');
+}
+
+// ==================== PRODUCT NAVIGATION (ETB) ====================
+function navProd(title, scr) {
+  if (!cur) return;
+  recI(title, 20);
+  addJourney(title, 'Viewed ' + title + ' offer page');
+  S('CP', scr);
+}
+
+// ==================== RECORD INTENT ====================
+function recI(product, amt) {
+  if (!cur || intent[product] === undefined) return;
+  intent[product] = Math.min(intent[product] + amt, 95);
+  updateRMPanels();
+}
+
+function recAutoI() {
+  if (!cur) return;
+  let prod = cur.id === 'rahul' ? 'Auto Loan Upgrade' : 'Auto Loan';
+  recI(prod, 2);
+}
+
+// ==================== EMI CALCULATORS ====================
+// Personal Loan labels
+function plLbl() {
+  document.getElementById('pla_l').innerText = '₹' + (+document.getElementById('pla').value).toLocaleString('en-IN');
+  document.getElementById('plr_l').innerText = document.getElementById('plr').value + '%';
+  document.getElementById('plt_l').innerText = document.getElementById('plt').value + ' Months';
+}
+
+// Personal Loan calculate
+function calcPL() {
+  let P = +document.getElementById('pla').value;
+  let R = +document.getElementById('plr').value / 1200;
+  let N = +document.getElementById('plt').value;
+  lastPLAmt = P; lastPLTen = N;
+  let emi = P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1);
+  document.getElementById('pl_emi').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+  recI('Personal Loan', 5);
+  addJourney('Personal Loan', 'Calculated EMI — ₹' + Math.round(emi).toLocaleString('en-IN') + '/mo');
+}
+
+// Auto Loan labels
+function alLbl() {
+  document.getElementById('ala_l').innerText = '₹' + (+document.getElementById('ala').value).toLocaleString('en-IN');
+  document.getElementById('alr_l').innerText = document.getElementById('alr').value + '%';
+  document.getElementById('alt_l').innerText = document.getElementById('alt').value + ' Months';
+}
+
+// Auto Loan calculate
+function calcAL() {
+  let P = +document.getElementById('ala').value;
+  let R = +document.getElementById('alr').value / 1200;
+  let N = +document.getElementById('alt').value;
+  lastALAmt = P; lastALTen = N;
+  let emi = P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1);
+  document.getElementById('al_emi').innerText = '₹' + Math.round(emi).toLocaleString('en-IN');
+  let prod = cur && cur.id === 'rahul' ? 'Auto Loan Upgrade' : 'Auto Loan';
+  recI(prod, 5);
+  addJourney(prod, 'Calculated EMI — ₹' + Math.round(emi).toLocaleString('en-IN') + '/mo');
+}
+
+// ==================== SUBMIT APPLICATION ====================
+function submitApp(product) {
+  if (!cur) return;
+  pendingProduct = product;
+  recI(product, 100);       // set to max
+  intent[product] = 100;    // ensure 100
+  addJourney(product, 'Clicked Apply / Submit');
+
+  document.getElementById('ap_tt').innerText = 'Apply — ' + product;
+  document.getElementById('ap_nm').innerText = cur.name;
+  document.getElementById('ap_mob').innerText = cur.mobile;
+
+  updateRMPanels();
+  S('CP', 'c_app');
+}
+
+function submitAutoApp() {
+  let prod = cur && cur.id === 'rahul' ? 'Auto Loan Upgrade' : 'Auto Loan';
+  submitApp(prod);
+}
+
+function finalSubmit() {
+  addJourney(pendingProduct, 'Application submitted successfully');
+  document.getElementById('ref_no').innerText = 'REF' + Math.floor(100000 + Math.random() * 900000);
+  updateRMPanels();
+  S('CP', 'c_ok');
+}
+
+// ==================== JOURNEY ====================
+function addJourney(product, desc) {
+  let t = new Date();
+  let stamp = t.getHours() + ':' + String(t.getMinutes()).padStart(2, '0') + ':' + String(t.getSeconds()).padStart(2, '0');
+  journey.push({ product, desc, time: stamp });
+  renderJourney();
+}
+
+function renderJourney() {
+  let el = document.getElementById('rm_jrn');
+  if (journey.length === 0) { el.innerHTML = 'No journey yet.'; return; }
+
+  // Group by product
+  let groups = {};
+  journey.forEach(j => {
+    if (!groups[j.product]) groups[j.product] = [];
+    groups[j.product].push(j);
+  });
+
+  let h = '';
+  for (let prod in groups) {
+    h += '<div style="font-size:8px;font-weight:800;color:#1a237e;margin-bottom:3px;margin-top:6px;">' + prod + '</div>';
+    groups[prod].forEach((s, i) => {
+      h += '<div style="display:flex;gap:6px;margin-bottom:3px;">' +
+           '<div class="jdot"></div>' +
+           '<div style="font-size:8px;"><b>' + s.desc + '</b> <span style="color:#aaa;">· ' + s.time + '</span></div></div>';
+    });
+  }
+  el.innerHTML = h;
+}
+
+// ==================== UPDATE RM PANELS ====================
+function updateRMPanels() {
+  updateRMIntent();
+  updateNBO();
+  checkHighIntent();
+  updateAIScript();
+}
+
+function updateRMIntent() {
+  let el = document.getElementById('rm_int');
+  let h = '';
+  let any = false;
+
+  for (let p in intent) {
+    let v = intent[p];
+    if (v > 0) {
+      any = true;
+      let col = v < 30 ? '#2ecc71' : v < 60 ? '#f39c12' : '#e53935';
+      h += '<div style="display:flex;justify-content:space-between;font-size:9px;margin-top:4px;">' +
+           '<b>' + p + '</b><span style="color:' + col + ';font-weight:700;">' + v + '%</span></div>' +
+           '<div class="ibar"><div class="ifill" style="width:' + v + '%;background:' + col + ';"></div></div>';
+    }
+  }
+  el.innerHTML = any ? h : 'No activity yet.';
+}
+
+function updateNBO() {
+  let sorted = Object.entries(intent).filter(([p, v]) => v > 0).sort((a, b) => b[1] - a[1]);
+  document.getElementById('rm_nbo').innerText = sorted.length ? sorted[0][0] + ' (' + sorted[0][1] + '%)' : '—';
+}
+
+function checkHighIntent() {
+  for (let p in intent) {
+    if (intent[p] >= 60 && !highShown[p]) {
+      highShown[p] = true;
+      document.getElementById('rm_ap').innerText = p;
+      let al = document.getElementById('rm_alert');
+      al.style.display = 'block';
+      setTimeout(() => al.style.display = 'none', 4500);
+    }
+  }
+}
+
+// ==================== AI CALLING SCRIPT ====================
+function updateAIScript() {
+  let el = document.getElementById('rm_scr');
+  if (!cur) { el.innerHTML = 'Waiting for customer activity...'; return; }
+
+  let sorted = Object.entries(intent).filter(([p, v]) => v > 0).sort((a, b) => b[1] - a[1]);
+  if (sorted.length === 0) { el.innerHTML = 'Waiting for customer activity...'; return; }
+
+  let top = sorted[0][0];
+  let firstName = cur.name.split(' ')[0];
+  let script = '';
+
+  if (cur.id === 'rahul') {
+    script = buildRahulScript(top, firstName, sorted);
+  } else {
+    script = buildAnjaliScript(top, firstName, sorted);
+  }
+
+  el.innerHTML = script;
+}
+
+function buildRahulScript(top, name, sorted) {
+  let s = '<div style="background:#e8eaf6;border:1px solid #9fa8da;padding:7px;border-radius:7px;margin-bottom:7px;font-size:8px;">' +
+          '🎯 <b>Focus:</b> ' + sorted.map(x => x[0]).join(' + ') + '</div>';
+
+  s += '"Hello <b>' + name + '</b>, this is Priya from ICICI Bank. Hope you\'re doing well!<br><br>';
+
+  if (top.includes('Auto Loan')) {
+    s += 'I noticed you\'ve been exploring our <b>Premium Auto Loan Upgrade</b>. ' +
+         'Based on your strong financial trajectory — increasing salary year on year and your recent move to an upscale neighbourhood — ' +
+         'you qualify for our <b>Elite Premium Auto Loan up to ₹70 Lakhs</b> with special rates.<br><br>';
+
+    if (lastALAmt > 0) {
+      let rounded = Math.ceil(lastALAmt / 500000) * 500000;
+      s += '<div style="background:#e8f5e9;border:1px solid #a5d6a7;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+           '💡 <b>Loan Insight:</b> Explored ₹' + lastALAmt.toLocaleString('en-IN') +
+           ' over ' + lastALTen + ' months. Recommended: ₹' + rounded.toLocaleString('en-IN') + '</div>';
+    }
+
+    s += 'Your current auto loan closes in just 4 months — perfect timing to upgrade!<br><br>';
+  }
+  else if (top === 'Credit Card') {
+    s += 'I see you\'ve been looking at our <b>Titanium Credit Card</b>. ' +
+         'As an Elite customer with strong financial growth, you get premium benefits including lifetime free membership, ' +
+         '5% cashback, and 4x annual lounge access.<br><br>';
+  }
+  else if (top === 'Savings Account') {
+    s += 'You explored our <b>Savings Account</b> benefits. Given your increasing income profile, ' +
+         'our premium savings tier with higher interest rates would be ideal for you.<br><br>';
+  }
+  else if (top === 'Salary Upgrade') {
+    s += 'Our <b>Salary Account Upgrade</b> comes with premium debit card, ₹25L accident cover, ' +
+         'and priority banking — perfect for your growing career trajectory.<br><br>';
+  }
+
+  // Cross-sell
+  if (sorted.length > 1) {
+    s += '<div style="background:#fff3e0;border:1px solid #ffb74d;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+         '🔗 <b>Cross-sell:</b> Also interested in ' + sorted.slice(1).map(x => x[0] + ' (' + x[1] + '%)').join(', ') + '</div>';
+  }
+
+  // Pending items
+  s += '<div style="background:#ffeaea;border:1px solid #ef9a9a;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+       '⚠️ <b>Pending:</b> FD Nominee not added — opportunity to guide & build trust.</div>';
+
+  s += 'Would you like me to help you proceed with the <b>' + top + '</b>?"';
+
+  return s;
+}
+
+function buildAnjaliScript(top, name, sorted) {
+  let s = '<div style="background:#fce4ec;border:1px solid #f48fb1;padding:7px;border-radius:7px;margin-bottom:7px;font-size:8px;">' +
+          '🎯 <b>Focus:</b> ' + sorted.map(x => x[0]).join(' + ') + '</div>';
+
+  s += '"Hello <b>' + name + '</b>, this is Priya from ICICI Bank. How are you doing today?<br><br>';
+
+  if (top === 'Personal Loan') {
+    s += 'I noticed you\'ve been exploring our <b>Personal Loan</b> options and even used our EMI calculator. ' +
+         'We have tailored personal loan options suited to your needs with competitive rates and flexible EMI options.<br><br>';
+
+    if (lastPLAmt > 0) {
+      let rounded = Math.ceil(lastPLAmt / 50000) * 50000;
+      s += '<div style="background:#fef0f0;border:1px solid #ef9a9a;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+           '💡 <b>Loan Insight:</b> Explored ₹' + lastPLAmt.toLocaleString('en-IN') +
+           ' over ' + lastPLTen + ' months. Recommended: ₹' + rounded.toLocaleString('en-IN') + '</div>';
+    }
+
+    s += 'Quick approval with minimal documentation — funds can be disbursed within 24 hours.<br><br>';
+  }
+  else if (top === 'Savings Account') {
+    s += 'You explored our <b>Savings Account</b> benefits. Our zero-balance account with free ATM withdrawals ' +
+         'and cashback rewards would be a great addition to your banking portfolio.<br><br>';
+  }
+  else if (top === 'Credit Card') {
+    s += 'You looked at our <b>Credit Card</b> upgrade options. As an existing card holder, ' +
+         'you can get enhanced credit limits and additional rewards.<br><br>';
+  }
+  else if (top.includes('Auto Loan')) {
+    s += 'Your current auto loan closes in 3 months. We have <b>Auto Loan</b> options ' +
+         'up to ₹15 Lakhs with competitive rates for your next vehicle.<br><br>';
+  }
+
+  // Cross-sell
+  if (sorted.length > 1) {
+    s += '<div style="background:#fff3e0;border:1px solid #ffb74d;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+         '🔗 <b>Cross-sell:</b> Also interested in ' + sorted.slice(1).map(x => x[0] + ' (' + x[1] + '%)').join(', ') + '</div>';
+  }
+
+  // Pending & caution
+  s += '<div style="background:#fff8e1;border:1px solid #ffe082;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+       '⚠️ <b>Note:</b> Income pattern inconsistent — emphasize flexible EMI & affordability. Avoid over-commitment.</div>';
+
+  s += '<div style="background:#ffeaea;border:1px solid #ef9a9a;padding:7px;border-radius:7px;font-size:8px;margin-bottom:7px;">' +
+       '⚠️ <b>Pending:</b> FD Nominee not added — build relationship by assisting with this.</div>';
+
+  s += 'Would you like me to help you with the <b>' + top + '</b>?"';
+
+  return s;
+}
+
+// ==================== FEEDBACK ====================
+function togFB() {
+  let v = document.getElementById('fb_t').value;
+  document.getElementById('fb_sb').style.display = v === 'Sales' ? 'block' : 'none';
+  document.getElementById('fb_svb').style.display = v === 'Service' ? 'block' : 'none';
+}
+
+function pushCRM() {
+  let type = document.getElementById('fb_t').value;
+  let notes = document.getElementById('fb_n').value.trim();
+
+  if (!type) { alert('Select feedback type.'); return; }
+
+  if (type === 'Sales' && !document.getElementById('fb_sc').value) {
+    alert('Select a Sales category.'); return;
+  }
+  if (type === 'Service' && !document.getElementById('fb_svc').value) {
+    alert('Select a Service category.'); return;
+  }
+  if (!notes) { alert('Enter RM notes.'); return; }
+
+  crmStore.push({
+    customer: cur ? cur.name : 'N/A',
+    type,
+    category: type === 'Sales' ? document.getElementById('fb_sc').value : document.getElementById('fb_svc').value,
+    notes,
+    time: new Date().toLocaleString()
+  });
+
+  let ok = document.getElementById('crm_ok');
+  ok.style.display = 'block';
+  setTimeout(() => ok.style.display = 'none', 3000);
+
+  // Reset
+  document.getElementById('fb_t').value = '';
+  document.getElementById('fb_sc').value = '';
+  document.getElementById('fb_svc').value = '';
+  document.getElementById('fb_n').value = '';
+  togFB();
+}
+
+</script>
+</body>
+</html>
